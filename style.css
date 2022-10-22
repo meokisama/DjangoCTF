@@ -1,0 +1,11 @@
+#logo
+{
+    width: 140px;
+    height: 35px;
+}
+
+.card-img-top#logo
+{
+    display: flex;
+    margin: auto;
+}
