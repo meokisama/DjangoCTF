@@ -5,7 +5,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>CTF Game</title>
-  <link rel="stylesheet" href="./style.css">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'main/style.css' %}?{% now "U" %}">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 </head>
@@ -15,8 +16,10 @@
   <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: black;">
     <!-- Start of navbar item -->
     <div class="container">
-      <a href="./index.html">
-        <image src="./logo.png" alt="Logo" class="img-fluid" id="logo">
+      {% load static %}
+      <a href="{% url 'home' %}">
+        {% load static %}
+        <image src="{% static 'main/logo.png' %}" alt="Logo" class="img-fluid" id="logo">
       </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav-menu">
@@ -29,16 +32,16 @@
             <a href="#Challenges" class="nav-link">Challenges</a>
           </li>
           <li class="nav-item">
-            <a href="./menu/calendar.html" class="nav-link">Calendar</a>
+            <a href="{% url 'calendar' %}" class="nav-link">Calendar</a>
           </li>
           <li class="nav-item">
-            <a href="#Charts" class="nav-link">Charts</a>
+            <a href="{% url 'chart' %}" class="nav-link">Charts</a>
           </li>
           <li class="nav-item">
-            <a href="#News" class="nav-link">News</a>
+            <a href="{% url 'news' %}" class="nav-link">News</a>
           </li>
           <li class="nav-item">
-            <a href="#Community" class="nav-link">Community</a>
+            <a href="{% url 'community' %}" class="nav-link">Community</a>
           </li>
         </ul>
 
@@ -60,9 +63,20 @@
   </nav>
   <!-- End of Navigation Bar -->
 
+  <!-- Test Area -->
+  <!-- <div class="bg-dark text-light">
+    <div>
+      {% for challenge in challenges %}
+      <div>
+        <h5>{{challenge.id}} -- <a href="{% url 'challenge' challenge.id %}">{{challenge.name}}</a></h5>
+      </div>
+      {% endfor %}
+    </div>
+  </div> -->
+  <!-- End of Test Area -->
+
   <!-- Start of Events -->
-  <section class="text-light p-5 bg-dark"
-    style="background-image: url(./background.png); background-repeat:no-repeat; background-size:100%">
+  <section class="text-light p-5 bg-dark" id="section-event">
     <div>
       <h1>Upcoming Events</h1>
     </div>
@@ -72,7 +86,27 @@
         <div class="col-lg-4 my-2">
           <div class="card bg-transparent border-danger text-light">
             <h5 class="card-title">International CTF Challenge</h5>
-            <img src="./logo.png" alt="Challenges Logo" class="card-img-top mx-auto my-3" id="logo">
+            {% load static %}
+            <image src="{% static 'main/logo.png' %}" alt="Challenges Logo" class="card-img-top mx-auto my-3" id="logo">
+              <div class="card-body text-start">
+                <p class="card-text">
+                  <b> Oganized by: </b> CTF International <br>
+                  <b> Start: </b> 10-10-2022 <br>
+                  <b> End: </b> 31-12-2022
+                  <br><br>
+                  If you've ever dreamed about winning a challenge such as the one I'm about to create, then you've seen
+                  the "I am the player." One of the great wonders in the world of video gaming is that it can challenge
+                  everyone.
+                </p>
+              </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 my-2">
+          <div class="card bg-transparent border-danger text-light">
+            <h5 class="card-title">International CTF Challenge</h5>
+            {% load static %}
+            <image src="{% static 'main/logo.png' %}" alt="Challenges Logo" class="card-img-top mx-auto my-3" id="logo">
             <div class="card-body text-start">
               <p class="card-text">
                 <b> Oganized by: </b> CTF International <br>
@@ -90,7 +124,8 @@
         <div class="col-lg-4 my-2">
           <div class="card bg-transparent border-danger text-light">
             <h5 class="card-title">International CTF Challenge</h5>
-            <img src="./logo.png" alt="Challenges Logo" class="card-img-top mx-auto my-3" id="logo">
+            {% load static %}
+            <image src="{% static 'main/logo.png' %}" alt="Challenges Logo" class="card-img-top mx-auto my-3" id="logo">
             <div class="card-body text-start">
               <p class="card-text">
                 <b> Oganized by: </b> CTF International <br>
@@ -108,7 +143,8 @@
         <div class="col-lg-4 my-2">
           <div class="card bg-transparent border-danger text-light">
             <h5 class="card-title">International CTF Challenge</h5>
-            <img src="./logo.png" alt="Challenges Logo" class="card-img-top mx-auto my-3" id="logo">
+            {% load static %}
+            <image src="{% static 'main/logo.png' %}" alt="Challenges Logo" class="card-img-top mx-auto my-3" id="logo">
             <div class="card-body text-start">
               <p class="card-text">
                 <b> Oganized by: </b> CTF International <br>
@@ -126,7 +162,8 @@
         <div class="col-lg-4 my-2">
           <div class="card bg-transparent border-danger text-light">
             <h5 class="card-title">International CTF Challenge</h5>
-            <img src="./logo.png" alt="Challenges Logo" class="card-img-top mx-auto my-3" id="logo">
+            {% load static %}
+            <image src="{% static 'main/logo.png' %}" alt="Challenges Logo" class="card-img-top mx-auto my-3" id="logo">
             <div class="card-body text-start">
               <p class="card-text">
                 <b> Oganized by: </b> CTF International <br>
@@ -144,25 +181,8 @@
         <div class="col-lg-4 my-2">
           <div class="card bg-transparent border-danger text-light">
             <h5 class="card-title">International CTF Challenge</h5>
-            <img src="./logo.png" alt="Challenges Logo" class="card-img-top mx-auto my-3" id="logo">
-            <div class="card-body text-start">
-              <p class="card-text">
-                <b> Oganized by: </b> CTF International <br>
-                <b> Start: </b> 10-10-2022 <br>
-                <b> End: </b> 31-12-2022
-                <br><br>
-                If you've ever dreamed about winning a challenge such as the one I'm about to create, then you've seen
-                the "I am the player." One of the great wonders in the world of video gaming is that it can challenge
-                everyone.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-4 my-2">
-          <div class="card bg-transparent border-danger text-light">
-            <h5 class="card-title">International CTF Challenge</h5>
-            <img src="./logo.png" alt="Challenges Logo" class="card-img-top mx-auto my-3" id="logo">
+            {% load static %}
+            <image src="{% static 'main/logo.png' %}" alt="Challenges Logo" class="card-img-top mx-auto my-3" id="logo">
             <div class="card-body text-start">
               <p class="card-text">
                 <b> Oganized by: </b> CTF International <br>
