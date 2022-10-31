@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CTF Game</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'main/style.css' %}?{% now " U" %}">
+    <link rel="stylesheet" href="../../static/main/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 </head>
@@ -14,12 +14,151 @@
 <body>
     {% include 'navbar.html' %}
     {% block content %}
+    <div class="calendar">
+        <div class="calendar-header">
+            <span class="month-change" id="prev-month"><</span>
+            <span class="month-picker" id="month-picker">February</span>
+            <div class="year-picker" id="year-picker">2022</div>
+            <span class="month-change" id="next-month">></span>
+        </div>
+        <div class="calendar-body">
+            <div class="calendar-week-day">
+                <div>Mo</div>
+                <div>Tu</div>
+                <div>We</div>
+                <div>Th</div>
+                <div>Fr</div>
+                <div>Sa</div>
+                <div>Su</div>
+            </div>
+            <div class="calendar-day"></div>
+            <div class="month-list"></div>
+            <div class="year-list"></div>
+        </div>
+    </div>
 
     {% endblock content %}
     {% include 'footer.html' %}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-        crossorigin="anonymous"></script>
+    <script>
+        let calendar = document.querySelector('.calendar')
+
+        const month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+
+        isLeapYear = (year) => {
+            return (year % 4 == 0 && year % 100 != 0 && year % 400 != 0) || (year % 100 == 0 && year % 400 ==0)
+        }
+
+        getFebDays = (year) => {
+            return isLeapYear(year) ? 29 : 28
+        }
+
+        generateCalendar = (month, year) => {
+            let calendar_day = calendar.querySelector('.calendar-day')
+
+            let days_of_month = [31, getFebDays(year), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+            calendar_day.innerHTML = ''
+
+            let currDate = new Date()
+
+            let curr_month_name = `${month_names[month]}`
+            month_picker.innerHTML = curr_month_name
+            year_picker.innerHTML = year
+            
+            let first_day = new Date(year, month, 1).getDay()
+            if (first_day == 0) {first_day = 7}
+
+            for (let i = 0; i <= days_of_month[month] + first_day - 2; i++) {
+                let day = document.createElement('div')
+                if (i >= first_day - 1) {
+                    day.classList.add('calendar-day-hover')
+                    day.innerHTML = i - first_day + 2
+                    if (i - first_day + 2 == currDate.getDate() && year == currDate.getFullYear() && month == currDate.getMonth()) {
+                        day.classList.add('curr-date')
+                    }
+                } else {
+                    day.classList.add('none-pointer-event')
+                }
+                calendar_day.appendChild(day)
+            }
+        }
+
+        let month_list = calendar.querySelector('.month-list')
+
+        month_names.forEach((e, index) => {
+            let month = document.createElement('div')
+            month.innerHTML = `<div>${e}</div>`
+            month.querySelector('div').onclick = () => {
+                month_list.classList.remove('show')
+                curr_month = index
+                generateCalendar(curr_month, curr_year)
+            }
+            month_list.appendChild(month)
+        })
+
+        let month_picker = calendar.querySelector('#month-picker')
+        let year_picker = calendar.querySelector('#year-picker')
+
+        month_picker.onclick = () => {
+            month_list.classList.add('show')
+            year_list.classList.remove('show')
+        }
+
+        let ten_years = []
+        let currDate = new Date()
+        let curr_month = currDate.getMonth()
+        let curr_year = currDate.getFullYear()
+        let year_list = document.querySelector('.year-list');
+
+        generateCalendar(curr_month, curr_year)
+
+        generateTenYears = (year) => {        
+            for (let i = 0; i < 10; i++){
+                ten_years[i] = year - (year%10) + i;
+            }
+            year_list.innerHTML = ''
+            ten_years.forEach((e, index) => {
+                let year = document.createElement('div')
+                year.innerHTML = `<div>${e}</div>`
+                year.querySelector('div').onclick = () => {
+                    year_list.classList.remove('show')
+                    curr_year = e
+                    generateCalendar(curr_month, curr_year)
+                }
+                year_list.appendChild(year)
+            })
+        }
+        
+        year_picker.onclick = () => {
+            generateTenYears(curr_year)
+            year_list.classList.add('show')
+            month_list.classList.remove('show')
+        }
+
+        document.querySelector('#prev-month').onclick = () => {
+            --curr_month
+            if (curr_month == -1) {
+                curr_month = 11
+                --curr_year
+                if (curr_year%10 == 9) {
+                    generateTenYears(curr_year)
+                }
+            }
+            generateCalendar(curr_month, curr_year)
+        }
+
+        document.querySelector('#next-month').onclick = () => {
+            ++curr_month
+            if (curr_month == 12) {
+                curr_month = 0
+                ++curr_year
+                if (curr_year%10 == 0) {
+                    generateTenYears(curr_year)
+                }
+            }
+            generateCalendar(curr_month, curr_year)
+        }
+    </script>
 </body>
 
 </html>
