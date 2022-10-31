@@ -29,7 +29,7 @@
       <div class="collapse navbar-collapse" id="nav-menu">
         <ul class="navbar-nav ms-5">
           <li class="nav-item">
-            <a href="#Challenges" class="nav-link">Challenges</a>
+            <a href="{% url 'challenge' %}" class="nav-link">Challenges</a>
           </li>
           <li class="nav-item">
             <a href="{% url 'calendar' %}" class="nav-link">Calendar</a>
@@ -51,10 +51,16 @@
           <button class="btn btn-outline-light" type="submit">Search</button>
         </form>
         <!-- End of navbar search -->
-
+        {% if request.user.is_authenticated %}
         <div class="ms-auto">
-          <a href="Signin" class="nav-link text-white">Sign in</a>
+          <a href="" class="nav-link text-white">Hello, {{user.username}}</a>
+          <a href="{% url 'user_logout' %}" class="nav-link text-white">Logout</a>
         </div>
+        {% else %}
+        <div class="ms-auto">
+          <a href="{% url 'user_login' %}" class="nav-link text-white">Login</a>
+        </div>
+        {% endif %}
       </div>
       <!-- End of navbar item -->
 
