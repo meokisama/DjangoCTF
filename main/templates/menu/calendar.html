@@ -99,6 +99,11 @@
                     day.onclick = () => {
                         let date = day.innerHTML + "/" + (curr_month + 1) + "/" + curr_year
                         document.querySelector('.note-date').innerHTML = date
+                        if (last_chosen_day != -1) {
+                            calendar.querySelector('.c' + last_chosen_day).classList.remove('chosen-date')
+                        }
+                        last_chosen_day = day.innerHTML
+                        calendar.querySelector('.c' + day.innerHTML).classList.add('chosen-date')
                     }
                 } else {
                     day.classList.add('none-pointer-event')
