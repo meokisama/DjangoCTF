@@ -14,26 +14,42 @@
 <body>
     {% include 'navbar.html' %}
     {% block content %}
-    <div class="calendar">
-        <div class="calendar-header">
-            <span class="month-change" id="prev-month"><</span>
-            <span class="month-picker" id="month-picker">February</span>
-            <div class="year-picker" id="year-picker">2022</div>
-            <span class="month-change" id="next-month">></span>
-        </div>
-        <div class="calendar-body">
-            <div class="calendar-week-day">
-                <div>Mo</div>
-                <div>Tu</div>
-                <div>We</div>
-                <div>Th</div>
-                <div>Fr</div>
-                <div>Sa</div>
-                <div>Su</div>
+    <div class="main">
+        <div class="calendar">
+            <div class="calendar-header">
+                <span class="month-change" id="prev-month"><</span>
+                <span class="month-picker" id="month-picker">February</span>
+                <div class="year-picker" id="year-picker">2022</div>
+                <span class="month-change" id="next-month">></span>
             </div>
-            <div class="calendar-day"></div>
-            <div class="month-list"></div>
-            <div class="year-list"></div>
+            <div class="calendar-body">
+                <div class="calendar-week-day">
+                    <div>Mo</div>
+                    <div>Tu</div>
+                    <div>We</div>
+                    <div>Th</div>
+                    <div>Fr</div>
+                    <div>Sa</div>
+                    <div>Su</div>
+                </div>
+                <div class="calendar-day"></div>
+                <div class="month-list"></div>
+                <div class="year-list"></div>
+            </div>
+        </div>
+        <div class="note">
+            <div class="note-header"></div>
+            <div class="note-body">
+                <div class="note-date"></div>
+                <div class="note-content">
+                    <form action="#">
+                        <textarea id="note-text" placeholder="Write down some note!"></textarea>
+                        <input type="submit" value="Take note">
+                    </form>
+                </div>
+                <img src="../../static/main/images/mem_note.png" id="mem-note">
+                <img src="../../static/main/images/pen.png" id="pen">
+            </div>
         </div>
     </div>
 
@@ -43,7 +59,7 @@
         let calendar = document.querySelector('.calendar')
 
         const month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-
+        
         isLeapYear = (year) => {
             return (year % 4 == 0 && year % 100 != 0 && year % 400 != 0) || (year % 100 == 0 && year % 400 ==0)
         }
@@ -51,6 +67,8 @@
         getFebDays = (year) => {
             return isLeapYear(year) ? 29 : 28
         }
+
+        let last_chosen_day = -1
 
         generateCalendar = (month, year) => {
             let calendar_day = calendar.querySelector('.calendar-day')
@@ -72,15 +90,23 @@
                 let day = document.createElement('div')
                 if (i >= first_day - 1) {
                     day.classList.add('calendar-day-hover')
+                    day.classList.add('c' + `${i - first_day + 2}`)
                     day.innerHTML = i - first_day + 2
                     if (i - first_day + 2 == currDate.getDate() && year == currDate.getFullYear() && month == currDate.getMonth()) {
                         day.classList.add('curr-date')
+                    }
+
+                    day.onclick = () => {
+                        let date = day.innerHTML + "/" + (curr_month + 1) + "/" + curr_year
+                        document.querySelector('.note-date').innerHTML = date
                     }
                 } else {
                     day.classList.add('none-pointer-event')
                 }
                 calendar_day.appendChild(day)
             }
+
+            last_chosen_day = -1
         }
 
         let month_list = calendar.querySelector('.month-list')
@@ -104,11 +130,13 @@
             year_list.classList.remove('show')
         }
 
-        let ten_years = []
         let currDate = new Date()
         let curr_month = currDate.getMonth()
         let curr_year = currDate.getFullYear()
-        let year_list = document.querySelector('.year-list');
+        let note_date = document.querySelector('.note-date')
+        note_date.innerHTML = currDate.getDate() + "/" + (curr_month + 1) + "/" + curr_year
+        let ten_years = []
+        let year_list = document.querySelector('.year-list')
 
         generateCalendar(curr_month, curr_year)
 
@@ -158,6 +186,60 @@
             }
             generateCalendar(curr_month, curr_year)
         }
+
+        note_date.onclick = () => {
+            let temp = note_date.innerHTML
+            date = temp.split('/')
+            if (curr_year != date[2] || curr_month != date[1]-1){
+                generateCalendar(date[1]-1, date[2])
+                curr_month = date[1]-1
+                curr_year = date[2]
+            } 
+
+            if (last_chosen_day != -1) {
+                calendar.querySelector('.c' + last_chosen_day).classList.remove('chosen-date')
+            }           
+            last_chosen_day = date[0]
+            calendar.querySelector('.c' + date[0]).classList.add('chosen-date')
+        }
+
+        note_date.addEventListener('wheel', function(e) {
+            let temp = note_date.innerHTML
+            date = temp.split('/')
+            let new_date = new Date(date[2],date[1]-1,date[0])
+
+            // wheel up midle mouse
+            if (e.deltaY < 0) {
+                new_date.setDate(new_date.getDate() + 1);
+                date[0] = new_date.getDate();
+                date[1] = new_date.getMonth() + 1;
+                date[2] = new_date.getFullYear();
+                note_date.innerHTML = date[0] + '/' + date[1] + '/' + date[2]
+            }
+
+            // wheel down midle mouse
+            else if (e.deltaY > 0) {
+                new_date.setDate(new_date.getDate() - 1);
+                date[0] = new_date.getDate();
+                date[1] = new_date.getMonth() + 1;
+                date[2] = new_date.getFullYear();
+                note_date.innerHTML = date[0] + '/' + date[1] + '/' + date[2]
+            }
+
+            // regenerate new calendar match date in note_date
+            if (curr_month != date[1]-1 || curr_year != date[2]){
+                generateCalendar(date[1]-1, date[2])
+                curr_month = date[1]-1
+                curr_year = date[2]
+            } 
+
+            // move the calendar day box
+            if (last_chosen_day != -1) {
+                calendar.querySelector('.c' + last_chosen_day).classList.remove('chosen-date')
+            }
+            last_chosen_day = date[0]
+            calendar.querySelector('.c' + date[0]).classList.add('chosen-date')
+        })
     </script>
 </body>
 

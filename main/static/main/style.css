@@ -18,9 +18,14 @@
 }
 
 /* start of Calendar */
-.calendar {
+.main {
     width: 90%;
     margin: auto;
+    display: flex;
+}
+
+.calendar {
+    width: 70%;
 }
 
 .calendar-header {
@@ -31,6 +36,7 @@
     color: white;
     box-shadow: -3px 5px 5px gray;
     border-radius: 10px 10px 0 0;
+    height: 12%;
 }
 
 .month-picker {
@@ -61,11 +67,11 @@
 }
 
 #prev-month {
-    left: 30%;
+    left: 15%;
 }
 
 #next-month {
-    right: 30%;
+    left: 54%;
 }
 
 .month-change:hover {
@@ -192,4 +198,97 @@
     pointer-events: none;
 }
 
+.chosen-date {
+    background-color: white;
+}
+
+.note {
+    width: calc(30% - 2px);
+    border-left: 2px solid white;
+}
+
+.note-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(202, 0, 0);
+    color: white;
+    box-shadow: 3px 5px 5px gray;
+    border-radius: 10px 10px 0 0;
+    height: 12%;
+}
+
+.note-body #mem-note {
+    object-fit: cover;
+    height: 55px;
+    width: 55px;
+    position: absolute;
+    bottom: 5%;
+}
+
+.note-body #pen {
+    object-fit: fill;
+    height: 55px;
+    width: 15px;
+    position: absolute;
+    bottom: 5%;
+    left: 20%;
+}
+
+.note-body {
+    background-color: bisque;
+    padding: 2% 5%;
+    font-size: 25px;
+    position: relative;
+    min-height: 430px;
+    box-shadow: 3px 5px 5px gray;
+    border-radius: 0 0 10px 10px;
+    height: 88%;
+}
+
+.note-date {
+    display: grid;
+    border: 2px solid transparent;
+    width: 100%;
+    height: 50px;
+    place-items: center;
+    border: 2px solid gray;
+    cursor: pointer;
+}
+
+.note-date:hover {
+    color: rgb(151, 151, 151);
+}
+
+.note-content {
+    margin-top: 3.5%;
+    border: 2px solid gray;
+    height: 65%;
+}
+
+.note-content form {
+    height: 100%;
+}
+
+.note-content textarea {
+    height: 100%;
+    width: 100%;
+    background-color: bisque;
+    resize: none;
+    outline: none;
+}
+
+.note-content input {
+    background-color: brown;
+    padding: 1% 4%;
+    border-radius: 10px;
+    color: white;
+    position: absolute;
+    right: 5%;
+    bottom: 5%;
+}
+
+.note-content input:hover {
+    color: rgb(151, 151, 151);
+}
 /* end of Calendar */
