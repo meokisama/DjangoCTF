@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400&display=swap');
+
 #logo {
     width: 140px;
     height: 35px;
@@ -26,6 +29,14 @@
 .card:hover {
     transform: translate3d(0px, -0.25rem, 0px);
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.32);
+    cursor: pointer;
+}
+
+.card-title {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 900;
+    font-size: 1.5rem;
+    line-height: 1.3;
 }
 
 #section-event {
@@ -34,6 +45,80 @@
     background-repeat: no-repeat;
     background-size: 100%
 }
+
+#upcoming {
+    font-weight: 800;
+    font-size: 2.5rem;
+    text-align: center;
+    padding: 20px;
+}
+
+.ThumbnailWrapper {
+    position: relative;
+    width: 100%;
+    margin-top: -20px;
+}
+
+.card img {
+    height: 250px;
+}
+
+.InnerWrapper {
+    overflow: hidden;
+}
+
+.ThumbnailWrapper::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.15);
+    transition: 0.3s ease;
+}
+
+.card-text {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    justify-content: space-between;
+    padding: 24px;
+}
+
+.card-text > * {
+    display: block;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+.card-description {
+    line-height: 1.5;
+    margin-top: 8px;
+    font-family: 'Fira Sans Condensed', sans-serif;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-break: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+}
+
+
+#nav-menu {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+}
+
+
+
+
+
 
 /* start of Calendar */
 .main {
