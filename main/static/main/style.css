@@ -112,9 +112,16 @@
 
 
 
-/* Start of Footer */
+/* Start of messages */
+.mess-container {
+    padding-top: 50px;
+}
 
-/* End of Footer */
+.messages {
+    color:white;
+    text-align: center;
+}
+/* End of messages */
 
 
 
