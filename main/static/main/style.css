@@ -6,11 +6,8 @@
     height: 35px;
 }
 
-.card-img-top#logo {
-    display: flex;
-    margin: auto;
-}
 
+/* Start of event card*/
 .card {
     position: relative;
     display: flex;
@@ -40,10 +37,7 @@
 }
 
 #section-event {
-    /* background-image: url("images/background.png"); */
     background-color: #1c1c1c;
-    background-repeat: no-repeat;
-    background-size: 100%
 }
 
 #upcoming {
@@ -88,7 +82,7 @@
     padding: 24px;
 }
 
-.card-text > * {
+.card-text>* {
     display: block;
 }
 
@@ -108,12 +102,20 @@
     text-overflow: ellipsis;
     text-align: left;
 }
+/* End of event card*/
 
 
 #nav-menu {
     font-family: 'Montserrat', sans-serif;
     font-weight: bold;
 }
+
+
+
+/* Start of Footer */
+
+/* End of Footer */
+
 
 
 

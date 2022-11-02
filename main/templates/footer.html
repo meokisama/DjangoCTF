@@ -6,39 +6,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CTF Game</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'main/style.css' %}?{% now " U" %}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'main/footer.css' %}?{% now " U" %}">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 </head>
 
 <body>
-
-    <!-- Contact -->
-    <footer class="text-light p-5 bg-dark border-top border-info" style="--bs-border-opacity: .2;">
+    <footer class="footer">
         <div class="container">
             <div class="row">
-                <div class="col-6">
-                    <h3>CTF Game</h3>
-                    <p>
-                        All tasks and writeups are copyrighted by their respective authors. <br>
-
-                    </p>
+                <div class="footer-col">
+                    <h4>CTFGames</h4>
+                    <ul>
+                        <li><a href="#">about us</a></li>
+                        <li><a href="#">our services</a></li>
+                        <li><a href="#">privacy policy</a></li>
+                        <li><a href="#">affiliate program</a></li>
+                    </ul>
                 </div>
-
-                <div class="col-6">
-                    <h5>Contact us</h5>
-                    <a href="">Youtube</a>
-                    <a href="">Facebook</a>
-
+                <div class="footer-col">
+                    <h4>get help</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">challenge</a></li>
+                        <li><a href="#">result</a></li>
+                        <li><a href="#">ranking</a></li>
+                        <li><a href="#">charts</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>collaborator</h4>
+                    <ul>
+                        <li><a href="#">19521323</a></li>
+                        <li><a href="#">19521346</a></li>
+                        <li><a href="#">19521773</a></li>
+                        <li><a href="#">19522118</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>follow us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
                 </div>
             </div>
-
         </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-        crossorigin="anonymous"></script>
+   </footer>
 </body>
 
 </html>
