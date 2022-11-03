@@ -15,24 +15,13 @@
 <body>
     {% include 'navbar.html' %}
     {% block content %}
-    <div>
-        <a href="{% url 'create-post' %}">Create New Post</a>
-
-        <div>
-            {% for post in posts %}
-            <div>
-                <a href="{% url 'update-post' post.id %}">Edit</a>
-                <a href="{% url 'delete-post' post.id %}">Delete</a>
-                <span>@{{post.author.username}}</span>
-                <h3>
-                    {{post.id}} -- <a href="{% url 'post' post.id %}">{{post.title}}</a>
-                </h3>
-                <small>{{post.topic.name}}</small>
-                <hr>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
+    
+    <form method="POST" action="">
+        {% csrf_token %}
+        <p>Are you sure to delete this "{{obj}}"?</p>
+        <a href="{{request.META.HTTP_REFERER}}">Go Back</a>
+        <input type="submit" value="Confirm"/>
+    </form>
 
     {% endblock content %}
     {% include 'footer.html' %}

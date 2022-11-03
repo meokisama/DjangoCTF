@@ -7,7 +7,7 @@
     <title>CTFGames - Cybersecurity Competition</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'main/style.css' %}?{% now " U" %}">
-    <link rel="shortcut icon" type="image/png" href="{% static 'main/logo-black.png' %}" />
+    <link rel="shortcut icon" type="image/png" href="{% static 'main/logo-black.png' %}"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 </head>
@@ -15,24 +15,16 @@
 <body>
     {% include 'navbar.html' %}
     {% block content %}
-    <div>
-        <a href="{% url 'create-post' %}">Create New Post</a>
 
-        <div>
-            {% for post in posts %}
-            <div>
-                <a href="{% url 'update-post' post.id %}">Edit</a>
-                <a href="{% url 'delete-post' post.id %}">Delete</a>
-                <span>@{{post.author.username}}</span>
-                <h3>
-                    {{post.id}} -- <a href="{% url 'post' post.id %}">{{post.title}}</a>
-                </h3>
-                <small>{{post.topic.name}}</small>
-                <hr>
-            </div>
-            {% endfor %}
-        </div>
+
+    <div>
+        <form method="POST" action="">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" value="Submit" name="" id="">
+        </form>
     </div>
+
 
     {% endblock content %}
     {% include 'footer.html' %}
