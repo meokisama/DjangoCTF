@@ -1,13 +1,21 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
+from django.db.models import Q
 
-from .models import Post
+from .models import Post, Topic
 from .forms import PostForm
 
 def community(request):
-    posts = Post.objects.all()
-    context = {'posts':posts}
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+    posts = Post.objects.filter(
+        Q(topic__name__icontains=q) |
+        Q(title__icontains=q) |
+        Q(description__icontains=q)
+    )
+    topics = Topic.objects.all()
+    post_count = posts.count()
+    context = {'posts':posts, 'topics':topics, 'post_count':post_count}
     return render(request, 'community/community.html', context)
 
 def post(request, pk):

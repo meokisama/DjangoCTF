@@ -28,9 +28,9 @@
                         <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                     <span>or use your email for registration</span>
-                    <input type="text" placeholder="Username" />
-                    <input type="email" placeholder="Email" />
-                    <input type="password" placeholder="Password" />
+                    <input type="text" name="usename" placeholder="Username" />
+                    <input type="email" name="email" placeholder="Email" />
+                    <input type="password" name="password" placeholder="Password" />
                     <button type="submit">Sign Up</button>
                 </form>
             </div>
@@ -44,8 +44,8 @@
                         <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                     <span>or use your account</span>
-                    <input type="text" placeholder="Username" />
-                    <input type="password" placeholder="Password" />
+                    <input type="text" name="username" placeholder="Username" />
+                    <input type="password" name="password" placeholder="Password" />
                     <a href="#">Forgot your password?</a>
                     <button type="submit">Sign In</button>
                 </form>
@@ -70,8 +70,10 @@
             {% if messages %}
             <ul class="messages">
                 {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-                    {% endfor %}
+                <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+                    {{ message | safe }}
+                </div>
+                {% endfor %}
             </ul>
             {% endif %}
         </div>
