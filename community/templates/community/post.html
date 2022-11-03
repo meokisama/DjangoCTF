@@ -15,7 +15,9 @@
 <body>
     {% include 'navbar.html' %}
     {% block content %}
-    
+    <div>
+        <h3>{{post.title}}</h3>
+    </div>
     {% endblock content %}
     {% include 'footer.html' %}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"

@@ -33,9 +33,6 @@ def chart(request):
 def news(request):
     return render(request, 'menu/news.html')
 
-def community(request):
-    return render(request, 'menu/community.html')
-
 def user_login(request):
 
     username=None

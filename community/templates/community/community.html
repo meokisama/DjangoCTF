@@ -15,7 +15,15 @@
 <body>
     {% include 'navbar.html' %}
     {% block content %}
-    
+    <div>
+        {% for post in posts %}
+        <div>
+            <h3>
+                {{post.id}} -- <a href="{% url 'post' post.id %}">{{post.title}}</a>
+            </h3>
+        </div>
+        {% endfor %}
+    </div>
     {% endblock content %}
     {% include 'footer.html' %}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
