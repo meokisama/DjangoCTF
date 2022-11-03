@@ -5,6 +5,8 @@ from tkinter.tix import CheckList
 from urllib import request
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+
 
 from .models import Challenge
 
@@ -38,8 +40,8 @@ def user_login(request):
     if request.user.is_authenticated:
         return redirect('home')
 
-    if request.method == 'POST':
-        username = request.POST.get('username')
+    if request.method == 'POST' and request.POST.get('su-username') == None:
+        username = request.POST.get('username').lower()
         password = request.POST.get('password')
 
         try:
@@ -54,6 +56,19 @@ def user_login(request):
             return redirect('home')
         else:
             messages.error(request, 'Invalid username or password')
+
+    #Register Process
+    if request.method == 'POST' and request.POST.get('su-username') != None:
+        username = request.POST.get('su-username').lower()
+        password = request.POST.get('su-password')
+        email = request.POST.get('su-email')
+
+        if User.objects.filter(username=username).exists() == False:
+            user = User.objects.create_user(username,email,password)
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.error(request, 'This username already existed')
 
     context = {}
     return render(request, 'menu/login_register.html', context)

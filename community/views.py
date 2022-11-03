@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
 from .models import Post, Topic
 from .forms import PostForm
@@ -23,6 +24,7 @@ def post(request, pk):
     context = {'post':post}
     return render(request, 'community/post.html', context)
 
+@login_required(login_url='user_login')
 def createPost(request):
     form = PostForm()
     if request.method == 'POST':
@@ -33,9 +35,12 @@ def createPost(request):
     context = {'form':form}
     return render(request, 'community/post_form.html', context)
 
+@login_required(login_url='user_login')
 def updatePost(request,pk):
     post = Post.objects.get(id=pk)
     form = PostForm(instance=post)
+    if request.user != post.author:
+        return HttpResponse('You are not allowed here.')
     if request.method == 'POST':
         form = PostForm(request.POST, instance=post)
         if form.is_valid():
@@ -44,8 +49,11 @@ def updatePost(request,pk):
     context = {'form':form}
     return render(request, 'community/post_form.html', context)
 
+@login_required(login_url='user_login')
 def deletePost(request, pk):
     post = Post.objects.get(id=pk)
+    if request.user != post.author:
+        return HttpResponse('You are not allowed here.')
     if request.method == 'POST':
         post.delete()
         return redirect('community')
