@@ -2,3 +2,8 @@
     display: grid;
     grid-template-columns: 1fr 3fr;
 }
+
+.post-container {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+}

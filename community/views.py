@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 
-from .models import Post, Topic
+from .models import Post, Topic, Comment
 from .forms import PostForm
 
 def community(request):
@@ -21,7 +21,17 @@ def community(request):
 
 def post(request, pk):
     post = Post.objects.get(id=pk)
-    context = {'post':post}
+    comments = post.comment_set.all().order_by('-created')
+    participants = post.participants.all()
+    if request.method == 'POST':
+        comment = Comment.objects.create(
+            user = request.user,
+            post = post,
+            body = request.POST.get('body')
+        )
+        post.participants.add(request.user)
+        return redirect('post',pk=post.id)
+    context = {'post':post,'comments':comments, 'participants':participants}
     return render(request, 'community/post.html', context)
 
 @login_required(login_url='user_login')
@@ -58,3 +68,14 @@ def deletePost(request, pk):
         post.delete()
         return redirect('community')
     return render(request, 'community/delete.html', {'obj':post})
+
+
+@login_required(login_url='user_login')
+def deleteComment(request, pk):
+    comment = Comment.objects.get(id=pk)
+    if request.user != comment.user:
+        return HttpResponse('You are not allowed here.')
+    if request.method == 'POST':
+        comment.delete()
+        return redirect('community')
+    return render(request, 'community/delete.html', {'obj':comment})
