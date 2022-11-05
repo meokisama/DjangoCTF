@@ -16,7 +16,9 @@ def community(request):
     )
     topics = Topic.objects.all()
     post_count = posts.count()
-    context = {'posts':posts, 'topics':topics, 'post_count':post_count}
+    comments = Comment.objects.all()
+
+    context = {'posts':posts, 'topics':topics, 'post_count':post_count,'comments':comments}
     return render(request, 'community/community.html', context)
 
 def post(request, pk):

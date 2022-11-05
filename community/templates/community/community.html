@@ -27,9 +27,9 @@
             </div>
 
             {% for topic in topics %}
-                <div>
-                    <a href="{% url 'community' %}?q={{topic.name}}">{{topic.name}}</a>
-                </div>
+            <div>
+                <a href="{% url 'community' %}?q={{topic.name}}">{{topic.name}}</a>
+            </div>
             {% endfor %}
         </div>
 
@@ -54,6 +54,23 @@
                 {% endfor %}
             </div>
         </div>
+
+        <div>
+            <h3>Recent Activities</h3>
+            <hr>
+            {% for comment in comments %}
+            <div>
+                <small>@{{comment.user}} {{comment.created|timesince}}</small>
+                <small>replied to "{{comment.post}}"</small>
+                <p>{{comment}}</p>
+                {% if request.user == comment.user %}
+                <a href="{% url 'delete-comment' comment.id %}">Delete</a>
+                {% endif %}
+                <hr>
+            </div>
+            {% endfor %}
+        </div>
+
     </div>
 
     {% endblock content %}
