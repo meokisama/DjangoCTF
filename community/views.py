@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 
-from .models import Post, Topic, Comment
+from .models import Post, Topic, Comment, User
 from .forms import PostForm
 
 def community(request):
@@ -39,26 +39,38 @@ def post(request, pk):
 @login_required(login_url='user_login')
 def createPost(request):
     form = PostForm()
+    topics = Topic.objects.all()
     if request.method == 'POST':
-        form = PostForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('community')
-    context = {'form':form}
+        topic_name = request.POST.get('topic')
+        topic, created = Topic.objects.get_or_create(name=topic_name)
+
+        Post.objects.create(
+            author=request.user,
+            topic=topic,
+            name=request.POST.get('name'),
+            description=request.POST.get('description'),
+        )
+        return redirect('community')
+    context = {'form':form,'topics':topics}
     return render(request, 'community/post_form.html', context)
 
 @login_required(login_url='user_login')
 def updatePost(request,pk):
     post = Post.objects.get(id=pk)
     form = PostForm(instance=post)
+    topics = Topic.objects.all()
     if request.user != post.author:
-        return HttpResponse('You are not allowed here.')
+        return HttpResponse('Your are not allowed here!!')
+
     if request.method == 'POST':
-        form = PostForm(request.POST, instance=post)
-        if form.is_valid():
-            form.save()
-            return redirect('community')
-    context = {'form':form}
+        topic_name = request.POST.get('topic')
+        topic, created = Topic.objects.get_or_create(name=topic_name)
+        post.name = request.POST.get('name')
+        post.topic = topic
+        post.description = request.POST.get('description')
+        post.save()
+        return redirect('community')
+    context = {'form':form,'topics': topics, 'post': post}
     return render(request, 'community/post_form.html', context)
 
 @login_required(login_url='user_login')
@@ -81,3 +93,24 @@ def deleteComment(request, pk):
         comment.delete()
         return redirect('community')
     return render(request, 'community/delete.html', {'obj':comment})
+
+
+def topicsPage(request):
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+    topics = Topic.objects.filter(name__icontains=q)
+    return render(request, 'base/topics.html', {'topics': topics})
+
+
+def activityPage(request):
+    comments = Comment.objects.all()
+    return render(request, 'base/activity.html', {'comments': comments})
+
+
+def userProfile(request, pk):
+    user = User.objects.get(id=pk)
+    posts = user.post_set.all()
+    comments = user.comment_set.all()
+    topics = Topic.objects.all()
+    context = {'user': user, 'posts': posts,
+               'comments': comments, 'topics': topics}
+    return render(request, 'base/profile.html', context)

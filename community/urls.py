@@ -8,4 +8,7 @@ urlpatterns = [
     path('update-post/<str:pk>/', views.updatePost, name="update-post"),
     path('delete-post/<str:pk>/', views.deletePost, name="delete-post"),
     path('delete-comment/<str:pk>/', views.deleteComment, name="delete-comment"),
+    path('profile/<str:pk>/', views.userProfile, name="user-profile"),
+    path('topics/', views.topicsPage, name="topics"),
+    path('activity/', views.activityPage, name="activity"),
 ]

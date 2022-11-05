@@ -1,41 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'main.html' %}
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CTFGames - Cybersecurity Competition</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'main/style.css' %}?{% now " U" %}">
-    <link rel="stylesheet" href="{% static 'main/community.css' %}?{% now " U" %}">
-    <link rel="shortcut icon" type="image/png" href="{% static 'main/logo-black.png' %}" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-</head>
+{% block content %}
 
-<body>
-    {% include 'navbar.html' %}
-    {% block content %}
-
+<div class="community-wrapper">
+  <main class="layout layout--3">
     <div class="community-container">
-        {% include 'community/topic_component.html' %}
-        <div>
-            <h5>{{post_count}} posts have published.</h5>
-            <a href="{% url 'create-post' %}">Create New Post</a>
 
-            {% include 'community/feed_component.html' %}
-            
+      <!-- Topics Start -->
+      {% include 'community/topic_component.html' %}
+
+      <!-- Topics End -->
+
+      <!-- Post List Start -->
+      <div class="postList">
+        <div class="mobile-menu">
+          <form action="{% url 'community' %}" method="GET" class="header__search">
+            <label>
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+                <title>search</title>
+                <path
+                  d="M32 30.586l-10.845-10.845c1.771-2.092 2.845-4.791 2.845-7.741 0-6.617-5.383-12-12-12s-12 5.383-12 12c0 6.617 5.383 12 12 12 2.949 0 5.649-1.074 7.741-2.845l10.845 10.845 1.414-1.414zM12 22c-5.514 0-10-4.486-10-10s4.486-10 10-10c5.514 0 10 4.486 10 10s-4.486 10-10 10z">
+                </path>
+              </svg>
+              <input name="q" placeholder="Search for posts" />
+            </label>
+          </form>
+          <div class="mobile-menuItems">
+            <a class="btn btn--main btn--pill" href="{% url 'topics' %}">Browse Topics</a>
+            <a class="btn btn--main btn--pill" href="{% url 'activity' %}">Recent Activities</a>
+          </div>
         </div>
-        
-        {% include 'community/activity_component.html' %}
 
+        <div class="postList__header">
+          <div>
+            <h2>Study Posts</h2>
+            <p>{{post_count}} Posts available</p>
+          </div>
+
+          <a class="btn btn--main" href="{% url 'create-post' %}">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+              <title>add</title>
+              <path
+                d="M16.943 0.943h-1.885v14.115h-14.115v1.885h14.115v14.115h1.885v-14.115h14.115v-1.885h-14.115v-14.115z">
+              </path>
+            </svg>
+            Create Post
+          </a>
+        </div>
+
+        {% include 'community/feed_component.html' %}
+
+      </div>
+      <!-- Post List End -->
+
+      <!-- Activities Start -->
+      {% include 'community/activity_component.html' %}
+
+      <!-- Activities End -->
     </div>
+  </main>
+</div>
 
-    {% endblock content %}
-    {% include 'footer.html' %}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-        crossorigin="anonymous"></script>
-</body>
-
-</html>
+{% endblock %}

@@ -1,36 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'main.html' %}
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CTFGames - Cybersecurity Competition</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'main/style.css' %}?{% now " U" %}">
-    <link rel="shortcut icon" type="image/png" href="{% static 'main/logo-black.png' %}"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-</head>
+{% block content %}
+<main class="create-post layout">
+  <div class="community-container">
+    <div class="layout__box">
+      <div class="layout__boxHeader">
+        <div class="layout__boxTitle">
+          <a href="{{request.META.HTTP_REFERER}}">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+              <title>arrow-left</title>
+              <path
+                d="M13.723 2.286l-13.723 13.714 13.719 13.714 1.616-1.611-10.96-10.96h27.625v-2.286h-27.625l10.965-10.965-1.616-1.607z">
+              </path>
+            </svg>
+          </a>
+          <h3>Create/Update Study Post</h3>
+        </div>
+      </div>
+      <div class="layout__body">
+        <form class="form" action="" method="POST">
+          {% csrf_token %}
 
-<body>
-    {% include 'navbar.html' %}
-    {% block content %}
+          <div class="form__group">
+            <label for="post_topic">Enter a Topic</label>
+            <input required type="text" value="{{post.topic.name}}" name="topic" list="topic-list" />
+            <datalist id="topic-list">
+              <select id="post_topic">
+                {% for topic in topics %}
+                <option value="{{topic.name}}">{{topic.name}}</option>
+                {% endfor %}
+              </select>
+            </datalist>
+          </div>
 
 
-    <div>
-        <form method="POST" action="">
-            {% csrf_token %}
-            {{form.as_p}}
-            <input type="submit" value="Submit" name="" id="">
+          <div class="form__group">
+            <label for="post_name">Post Name</label>
+            {{form.name}}
+          </div>
+
+          <div class="form__group">
+            <label for="post_description">Post Description</label>
+            {{form.description}}
+          </div>
+
+          <!-- <div class="form__group">
+            <label for="post_topic">Topic</label>
+            <input required type="text" name="topic" id="post_topic" list="topic-list" />
+            <datalist id="topic-list">
+              <select id="post_topic">
+                <option value="">Select your topic</option>
+                <option value="Python">Python</option>
+                <option value="Django">Django</option>
+              </select>
+            </datalist>
+
+          </div> -->
+
+
+          <div class="form__action">
+            <a class="btn btn--dark" href="{{request.META.HTTP_REFERER}}">Cancel</a>
+            <button class="btn btn--main" type="submit">Submit</button>
+          </div>
         </form>
+      </div>
     </div>
-
-
-    {% endblock content %}
-    {% include 'footer.html' %}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-        crossorigin="anonymous"></script>
-</body>
-
-</html>
+  </div>
+</main>
+{% endblock content %}

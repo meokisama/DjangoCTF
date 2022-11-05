@@ -138,3 +138,6 @@ try:
     }
 except Exception as e:
     pass
+
+
+AUTH_USER_MODEL = 'community.User'
