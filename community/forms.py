@@ -16,7 +16,8 @@ class PostForm(ModelForm):
         exclude = ['participants']
 
 
-# class UserForm(ModelForm):
-#     class Meta:
-#         model = User
-#         fields = ['avatar', 'name', 'username', 'email', 'bio']
+class UserForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ['avatar', 'name', 'username', 'email', 'bio']
+

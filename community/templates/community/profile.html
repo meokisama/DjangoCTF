@@ -1,0 +1,52 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div style="height:100vh;">
+  <main class="profile-page layout layout--3">
+    <div class="container">
+      <!-- Topics Start -->
+      {% include 'community/topic_component.html' %}
+      <!-- Topics End -->
+
+      <!-- Post List Start -->
+      <div class="postList">
+        <div class="profile">
+          <div class="profile__avatar">
+            <div class="avatar avatar--large active">
+              <img src="{{user.avatar.url}}" />
+            </div>
+          </div>
+          <div class="profile__info">
+            <h3>{{user.name}}</h3>
+            <p>@{{user.username}}</p>
+            {% if request.user == user %}
+            <a href="{% url 'update-user' %}" class="btn btn--main btn--pill">Edit Profile</a>
+            {% endif %}
+          </div>
+          <div class="profile__about">
+            <h3>About</h3>
+            <p>
+              {{user.bio}}
+            </p>
+          </div>
+        </div>
+
+        <div class="postList__header">
+          <div>
+            <h2>Publisded Posts</a>
+            </h2>
+          </div>
+        </div>
+        {% include 'community/feed_component.html' %}
+
+
+      </div>
+      <!-- Post List End -->
+
+      <!-- Activities Start -->
+      {% include 'community/activity_component.html' %}
+      <!-- Activities End -->
+    </div>
+  </main>
+</div>
+{% endblock content %}

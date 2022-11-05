@@ -6,8 +6,8 @@ from urllib import request
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-
-
+from django.contrib.auth import get_user_model
+User = get_user_model()
 from .models import Challenge
 
 # Create your views here.
@@ -35,7 +35,7 @@ def chart(request):
 def news(request):
     return render(request, 'menu/news.html')
 
-def user_login(request):
+def userLogin(request):
    
     if request.user.is_authenticated:
         return redirect('home')

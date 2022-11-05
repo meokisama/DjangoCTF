@@ -7,54 +7,65 @@
     <title>CTFGames - Cybersecurity Competition</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'main/footer.css' %}?{% now " U" %}">
-    <link rel="shortcut icon" type="image/png" href="{% static 'main/logo-black.png' %}"/>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="shortcut icon" type="image/png" href="{% static 'main/logo-black.png' %}" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 </head>
 
 <body>
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="footer-col">
-                    <h4>CTFGames</h4>
-                    <ul>
-                        <li><a href="#">about us</a></li>
-                        <li><a href="#">our services</a></li>
-                        <li><a href="#">privacy policy</a></li>
-                        <li><a href="#">affiliate program</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>get help</h4>
-                    <ul>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">challenge</a></li>
-                        <li><a href="#">result</a></li>
-                        <li><a href="#">ranking</a></li>
-                        <li><a href="#">charts</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>collaborator</h4>
-                    <ul>
-                        <li><a href="#">19521323</a></li>
-                        <li><a href="#">19521346</a></li>
-                        <li><a href="#">19521773</a></li>
-                        <li><a href="#">19522118</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>follow us</h4>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+    <div class="footer-wrapper">
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="row">
+                    <div class="footer-col">
+                        <h4>CTFGames</h4>
+                        <ul>
+                            <li>
+                                <a href="{% url 'challenge' %}">Challenges</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'calendar' %}">Calendar</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'chart' %}">Charts</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'news' %}">News</a>
+                            </li>
+                            <li>
+                                <a href="/community/">Community</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>References</h4>
+                        <ul>
+                            <li><a href="#">Github</a></li>
+                            <li><a href="#">Django Docs</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>collaborator</h4>
+                        <ul>
+                            <li><a href="#">19521323</a></li>
+                            <li><a href="#">19521346</a></li>
+                            <li><a href="#">19521773</a></li>
+                            <li><a href="#">19522118</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>follow us</h4>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-   </footer>
+        </footer>
+    </div>
 </body>
 
 </html>
