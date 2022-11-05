@@ -16,7 +16,7 @@ def community(request):
     )
     topics = Topic.objects.all()
     post_count = posts.count()
-    comments = Comment.objects.all()
+    comments = Comment.objects.filter(Q(post__topic__name__icontains=q))
 
     context = {'posts':posts, 'topics':topics, 'post_count':post_count,'comments':comments}
     return render(request, 'community/community.html', context)

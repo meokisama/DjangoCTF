@@ -1,0 +1,16 @@
+<div>
+    {% for post in posts %}
+    <div>
+        {% if request.user == post.author %}
+        <a href="{% url 'update-post' post.id %}">Edit</a>
+        <a href="{% url 'delete-post' post.id %}">Delete</a>
+        {% endif %}
+        <span>@{{post.author.username}}</span>
+        <h3>
+            {{post.id}} -- <a href="{% url 'post' post.id %}">{{post.title}}</a>
+        </h3>
+        <small>{{post.topic.name}}</small>
+        <hr>
+    </div>
+    {% endfor %}
+</div>
