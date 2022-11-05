@@ -17,8 +17,8 @@
 /*========== base styles ==========*/
 
 * {
-  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
-    "Helvetica Neue", sans-serif;
+  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -608,7 +608,7 @@ a {
   border-bottom: 1px solid var(--color-dark-medium);
 }
 
-.topics-page .header__search{
+.topics-page .header__search {
   display: block;
 }
 
@@ -649,6 +649,15 @@ a {
   background-color: var(--color-dark);
   border-radius: 1rem;
   padding: 2rem;
+  box-shadow: 0 0 0.3rem rgba(0, 0, 0, 0.479) !important;
+  transition: all 0.3s ease-out;
+  transform: translateZ(0);
+}
+
+.postListPost:hover {
+  transform: translate3d(0px, -0.25rem, 0px);
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.623);
+  cursor: pointer !important;
 }
 
 .postListPost__header {
@@ -1167,8 +1176,6 @@ a {
   color: var(--color-main);
   font-weight: 1.4rem;
 }
-
-
 
 /* Footer */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");

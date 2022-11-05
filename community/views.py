@@ -55,7 +55,7 @@ def createPost(request):
         Post.objects.create(
             author=request.user,
             topic=topic,
-            name=request.POST.get('name'),
+            title=request.POST.get('title'),
             description=request.POST.get('description'),
         )
         return redirect('community')
