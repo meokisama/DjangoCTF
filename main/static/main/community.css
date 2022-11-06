@@ -1,4 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
 :root {
   --color-main: #71c6dd;
@@ -271,12 +273,25 @@ a {
 
 .header {
   padding: 1.5rem;
-  background-color: var(--color-dark);
+  background-color: #212529;
+  padding: 2rem 0 4rem 0;
+}
+
+.header ul {
+  display: inline-flex; flex-wrap: wrap; gap: 7px; align-content: center; justify-content: center; padding: 0; font-weight: 500; font-size: 1.5rem;
+}
+
+.header ul li {
+  padding-right: 0.25rem;
+}
+
+.header a {
+  color: #8b8b8b;
 }
 
 .header > .container {
   display: flex;
-  gap: 9.5rem;
+  gap: 6.5rem;
 }
 
 .header__logo,
@@ -314,7 +329,7 @@ a {
 }
 
 .header__search input {
-  width: 30rem;
+  width: 24rem;
   background: transparent;
   border: none;
   outline: none;
@@ -323,7 +338,7 @@ a {
 
 @media screen and (max-width: 800px) {
   .header__search input {
-    width: 20rem;
+    width: 15rem;
   }
 
   .header > .container {
@@ -1178,17 +1193,7 @@ a {
 }
 
 /* Footer */
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
-body {
-  line-height: 1.5;
-  font-family: "Poppins", sans-serif;
-}
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 .footer-container {
   max-width: 1170px;
   margin: auto;
@@ -1219,6 +1224,7 @@ ul {
   margin-bottom: 35px;
   font-weight: 500;
   position: relative;
+  font-family: "Poppins", sans-serif;
 }
 .footer-col h4::before {
   content: "";
@@ -1242,6 +1248,7 @@ ul {
   color: #bbbbbb;
   display: block;
   transition: all 0.3s ease;
+  font-family: "Poppins", sans-serif;
 }
 .footer-col ul li a:hover {
   color: #ffffff;

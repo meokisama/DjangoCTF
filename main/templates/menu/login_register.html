@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CTFGames - Cybersecurity Competition</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'main/style.css' %}?{% now " U" %}">
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'main/login.css' %}?{% now " U" %}">
+    <link rel="stylesheet" href="{% static 'main/style.css' %}">
     <link rel="shortcut icon" type="image/png" href="{% static 'main/logo-black.png' %}"/>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css'>
 </head>
@@ -16,7 +14,7 @@
 <body>
     {% include 'navbar.html' %}
     {% block content %}
-    <div class="login-wrapper">
+    <div class="login-wrapper" id="login-wrapper">
         <div class="login-container" id="login-container">
             <div class="form-container sign-up-container">
                 <form method="POST" action="#">
