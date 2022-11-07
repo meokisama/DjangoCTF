@@ -30,12 +30,11 @@
         <div class="container p-4">
             <div class="row text-center">
                 {% for entry in post_pagin %}
-                <div class="col-lg-6 my-2">
+                <div class="col-lg-6 my-2" onclick="window.open('{{entry.link}}')">
                     <div class="card">
                         <div class="ThumbnailWrapper">
                             <div class="InnerWrapper">
-                                {% load static %}
-                                <image src="">
+                                <image src="{{entry.thumbnail}}">
                             </div>
                         </div>
                         <div class="card-text" style="text-align: left;">
