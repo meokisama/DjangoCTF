@@ -32,9 +32,6 @@ def calendar(request):
 def chart(request):
     return render(request, 'menu/chart.html')
 
-def news(request):
-    return render(request, 'menu/news.html')
-
 def userLogin(request):
    
     if request.user.is_authenticated:

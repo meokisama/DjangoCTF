@@ -1,3 +1,4 @@
+{% if post_pagin.has_other_pages %}
 <div class="pagination">
     <ul class="container">
         {% if post_pagin.has_previous %}
@@ -17,27 +18,4 @@
         {% endif %}
     </ul>
 </div>
-
-<!-- <div class="pagination">
-    {% if post_pagin.has_other_pages %}
-    <ul class="container">
-        {% if post_pagin.has_previous %}
-        <li><a class="btn page-link" href="?page={{ post_pagin.previous_page_number }}">&laquo;</a></li>
-        {% else %}
-        <li class="disabled"><span>&laquo;</span></li>
-        {% endif %}
-        {% for i in post_pagin.paginator.page_range %}
-        {% if post_pagin.number == i %}
-        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-        {% else %}
-        <li><a class="btn page-link" href="?page={{ i }}">{{ i }}</a></li>
-        {% endif %}
-        {% endfor %}
-        {% if post_pagin.has_next %}
-        <li><a class="btn page-link" href="?page={{ post_pagin.next_page_number }}">&raquo;</a></li>
-        {% else %}
-        <li class="disabled"><span>&raquo;</span></li>
-        {% endif %}
-    </ul>
-    {% endif %}
-</div> -->
+{% endif %}

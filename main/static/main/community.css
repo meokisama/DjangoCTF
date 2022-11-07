@@ -1314,4 +1314,5 @@ ul {
 .pagination .btn{
     border: 1px solid #51546e;
     background-color: #3f4156;
+    font-size: inherit;
 }
