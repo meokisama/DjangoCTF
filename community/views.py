@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib import messages
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
-
+from django.core.paginator import Paginator
 from .models import Post, Topic, Comment, User
 from .forms import PostForm, UserForm
 
@@ -21,9 +21,10 @@ def community(request):
     topics = Topic.objects.all()
     post_count = posts.count()
     comments = Comment.objects.filter(Q(post__topic__name__icontains=q))
-
-    context = {'posts': posts, 'topics': topics,
-               'post_count': post_count, 'comments': comments}
+    paginator = Paginator(posts, 5)
+    page = request.GET.get('page')
+    post_pagin = paginator.get_page(page)
+    context = {'posts': posts, 'topics': topics, 'post_count': post_count, 'comments': comments,'post_pagin':post_pagin}
     return render(request, 'community/community.html', context)
 
 

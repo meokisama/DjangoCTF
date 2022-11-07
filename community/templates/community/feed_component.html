@@ -14,6 +14,7 @@
     <div class="postListPost__content">
         <a href="{% url 'post' post.id %}">{{post.title}}</a>
     </div>
+    <a href="{% url 'post' post.id %}" style="color: var(--color-light); margin-bottom: 1.5rem; line-height: 1.6; font-weight: 400; color: var(--color-light-gray);">{{post.description}}</a>
     <div class="postListPost__meta">
         <a href="{% url 'post' post.id %}" class="postListPost__joined">
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">

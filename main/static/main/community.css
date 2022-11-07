@@ -714,7 +714,7 @@ a {
 .postListPost__content a {
   font-size: 2rem;
   font-weight: 500;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0rem;
   color: var(--color-light);
   transition: all 0.3s ease-in-out;
 }
@@ -1282,4 +1282,36 @@ ul {
   .footer-col {
     width: 100%;
   }
+}
+
+
+
+/*=======================
+  Pagination
+========================*/
+.pagination {
+  margin-top: 8rem;
+  margin-bottom: 10rem;
+}
+
+.pagination > ul {
+  flex-wrap: wrap;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.pagination .btn {
+  color: var(--color-sub);
+}
+
+.pagination .btn.btn--sub {
+  color: var(--color-light);
+}
+
+.pagination .btn{
+    border: 1px solid #51546e;
+    background-color: #3f4156;
 }
