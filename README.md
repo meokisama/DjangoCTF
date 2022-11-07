@@ -1,5 +1,5 @@
 <p align="center">
-    <img style="width:10%;" src="https://raw.githubusercontent.com/chienpro987654/CTFWeb/master/main/static/main/logo-black.png?token=GHSAT0AAAAAABWHKIIRNFENQSPJD62V3L5AY3HYPXQ" />
+    <img style="width:10%;" src="main/static/main/logo-black.png" />
 </p>
 
 <h2 align="center"> CTFGames </h2>
@@ -9,7 +9,6 @@
 <p align="center">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg"/>
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg"/>
-    <img src="https://img.shields.io/twitter/follow/meokiiii.svg?label=Follow%20@meokiiii"/>
 </p>
 
 ### Setup Envirenmont
