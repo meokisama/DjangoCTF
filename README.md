@@ -11,7 +11,7 @@
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg"/>
 </p>
 
-### Setup Envirenmont
+### Setup Environment
 1. Create a virtual environment :
 ```bash
 # Let's install virtualenv first
