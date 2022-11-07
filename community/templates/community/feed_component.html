@@ -1,7 +1,7 @@
 {% for post in post_pagin %}
 <div class="postListPost">
     <div class="postListPost__header">
-        <a href="{% url 'user-profile' user.id %}" class="postListPost__author">
+        <a href="{% url 'user-profile' post.author.id %}" class="postListPost__author">
             <div class="avatar avatar--small">
                 <img src="{{post.author.avatar.url}}" />
             </div>

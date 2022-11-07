@@ -59,12 +59,13 @@ def createPost(request):
         topic_name = request.POST.get('topic')
         topic, created = Topic.objects.get_or_create(name=topic_name)
 
-        Post.objects.create(
+        post = Post.objects.create(
             author=request.user,
             topic=topic,
             title=request.POST.get('title'),
             description=request.POST.get('description'),
         )
+        post.participants.add(request.user)
         return redirect('community')
     context = {'form': form, 'topics': topics}
     return render(request, 'community/post_form.html', context)
@@ -128,7 +129,7 @@ def userProfile(request, pk):
     posts = user.post_set.all()
     comments = user.comment_set.all()
     topics = Topic.objects.all()
-    context = {'user': user, 'posts': posts, 'comments': comments, 'topics': topics}
+    context = {'user': user, 'post_pagin': posts, 'comments': comments, 'topics': topics}
     return render(request, 'community/profile.html', context)
 
 @login_required(login_url='login')

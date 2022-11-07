@@ -101,8 +101,8 @@ a {
 }
 
 .btn--main {
-  background-color: var(--color-main);
-  color: var(--color-dark);
+  background-color: #6D83F2;
+  color: #2c2c2c;
 }
 
 .btn:hover {
@@ -662,8 +662,9 @@ a {
 .postListPost {
   margin-bottom: 2.4rem;
   background-color: var(--color-dark);
-  border-radius: 1rem;
+  border-radius: 2rem;
   padding: 2rem;
+  border-bottom: 7px solid #6D83F2 !important;
   box-shadow: 0 0 0.3rem rgba(0, 0, 0, 0.479) !important;
   transition: all 0.3s ease-out;
   transform: translateZ(0);
@@ -760,8 +761,16 @@ a {
 
 .activities {
   background: var(--color-dark);
-  border-radius: 5px;
+  border-radius: 1.5rem;
   overflow: hidden;
+  box-shadow: 0 0 0.3rem rgba(0, 0, 0, 0.479) !important;
+  transition: all 0.3s ease-out;
+  transform: translateZ(0);
+}
+
+.activities:hover {
+  transform: translate3d(0px, -0.25rem, 0px);
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.623);
 }
 
 .activities__header h2 {
@@ -772,13 +781,14 @@ a {
   color: var(--color-light);
   letter-spacing: 1px;
   font-size: 1.4rem;
+  text-align: center;
 }
 
 .activities__box {
   margin: 1.5rem;
   padding: 1.5rem;
   border: 2px solid var(--color-dark-medium);
-  border-radius: 5px;
+  border-radius: 1.5rem;
 }
 
 .activities__boxHeader p {
