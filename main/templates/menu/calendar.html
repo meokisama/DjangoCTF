@@ -7,7 +7,7 @@
     <title>CTFGames - Cybersecurity Competition</title>
     {% load static %}
     <link rel="stylesheet" href="../../static/main/style.css">
-    <link rel="shortcut icon" type="image/png" href="{% static 'main/logo-black.png' %}"/>
+    <link rel="shortcut icon" type="image/png" href="{% static 'main/logo-black.png' %}" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 </head>
@@ -15,54 +15,61 @@
 <body>
     {% include 'navbar.html' %}
     {% block content %}
-    <div class="main">
-        <div class="calendar">
-            <div class="calendar-header">
-                <span class="month-change" id="prev-month"><</span>
-                <span class="month-picker" id="month-picker">February</span>
-                <div class="year-picker" id="year-picker">2022</div>
-                <span class="month-change" id="next-month">></span>
-            </div>
-            <div class="calendar-body">
-                <div class="calendar-week-day">
-                    <div>Mo</div>
-                    <div>Tu</div>
-                    <div>We</div>
-                    <div>Th</div>
-                    <div>Fr</div>
-                    <div>Sa</div>
-                    <div>Su</div>
+    <div style="min-height:100vh;">
+        <div class="main">
+            <div class="calendar">
+                <div class="calendar-header">
+                    <!-- <span class="month-change" id="prev-month"><</span>
+                    <span class="month-picker" id="month-picker">February</span>
+                    <span class="year-picker" id="year-picker">2022</span>
+                    <span class="month-change" id="next-month">></span> -->
+                    <ul id="calendar__header">
+                        <li class="month-change" id="prev-month" style="padding-right: 2rem;">&#10092;</li>
+                        <li class="month-picker" id="month-picker">February</li>
+                        <li class="year-picker" id="year-picker">2022</li>
+                        <li class="month-change" id="next-month">&#10093;</li>
+                    </ul>
                 </div>
-                <div class="calendar-day"></div>
-                <div class="month-list"></div>
-                <div class="year-list"></div>
-            </div>
-        </div>
-        <div class="note">
-            <div class="note-header"></div>
-            <div class="note-body">
-                <div class="note-date"></div>
-                <div class="note-content">
-                    <form action="#">
-                        <textarea id="note-text" placeholder="Write down some note!"></textarea>
-                        <input type="submit" value="Take note">
-                    </form>
+                <div class="calendar-body">
+                    <div class="calendar-week-day">
+                        <div>Mo</div>
+                        <div>Tu</div>
+                        <div>We</div>
+                        <div>Th</div>
+                        <div>Fr</div>
+                        <div>Sa</div>
+                        <div>Su</div>
+                    </div>
+                    <div class="calendar-day"></div>
+                    <div class="month-list"></div>
+                    <div class="year-list"></div>
                 </div>
-                <img src="../../static/main/images/mem_note.png" id="mem-note">
-                <img src="../../static/main/images/pen.png" id="pen">
+            </div>
+            <div class="note">
+                <div class="note-header">
+                    <span class="month-picker">NOTE</span>
+                </div>
+                <div class="note-body">
+                    <div class="note-date"></div>
+                    <div class="note-content">
+                        <form action="#">
+                            <textarea id="note-text" placeholder="Write down some note..."></textarea>
+                            <input type="submit" value="Save">
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
     {% endblock content %}
     {% include 'footer.html' %}
     <script>
         let calendar = document.querySelector('.calendar')
 
         const month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-        
+
         isLeapYear = (year) => {
-            return (year % 4 == 0 && year % 100 != 0 && year % 400 != 0) || (year % 100 == 0 && year % 400 ==0)
+            return (year % 4 == 0 && year % 100 != 0 && year % 400 != 0) || (year % 100 == 0 && year % 400 == 0)
         }
 
         getFebDays = (year) => {
@@ -83,9 +90,9 @@
             let curr_month_name = `${month_names[month]}`
             month_picker.innerHTML = curr_month_name
             year_picker.innerHTML = year
-            
+
             let first_day = new Date(year, month, 1).getDay()
-            if (first_day == 0) {first_day = 7}
+            if (first_day == 0) { first_day = 7 }
 
             for (let i = 0; i <= days_of_month[month] + first_day - 2; i++) {
                 let day = document.createElement('div')
@@ -146,9 +153,9 @@
 
         generateCalendar(curr_month, curr_year)
 
-        generateTenYears = (year) => {        
-            for (let i = 0; i < 10; i++){
-                ten_years[i] = year - (year%10) + i;
+        generateTenYears = (year) => {
+            for (let i = 0; i < 10; i++) {
+                ten_years[i] = year - (year % 10) + i;
             }
             year_list.innerHTML = ''
             ten_years.forEach((e, index) => {
@@ -162,7 +169,7 @@
                 year_list.appendChild(year)
             })
         }
-        
+
         year_picker.onclick = () => {
             generateTenYears(curr_year)
             year_list.classList.add('show')
@@ -174,7 +181,7 @@
             if (curr_month == -1) {
                 curr_month = 11
                 --curr_year
-                if (curr_year%10 == 9) {
+                if (curr_year % 10 == 9) {
                     generateTenYears(curr_year)
                 }
             }
@@ -186,7 +193,7 @@
             if (curr_month == 12) {
                 curr_month = 0
                 ++curr_year
-                if (curr_year%10 == 0) {
+                if (curr_year % 10 == 0) {
                     generateTenYears(curr_year)
                 }
             }
@@ -196,23 +203,23 @@
         note_date.onclick = () => {
             let temp = note_date.innerHTML
             date = temp.split('/')
-            if (curr_year != date[2] || curr_month != date[1]-1){
-                generateCalendar(date[1]-1, date[2])
-                curr_month = date[1]-1
+            if (curr_year != date[2] || curr_month != date[1] - 1) {
+                generateCalendar(date[1] - 1, date[2])
+                curr_month = date[1] - 1
                 curr_year = date[2]
-            } 
+            }
 
             if (last_chosen_day != -1) {
                 calendar.querySelector('.c' + last_chosen_day).classList.remove('chosen-date')
-            }           
+            }
             last_chosen_day = date[0]
             calendar.querySelector('.c' + date[0]).classList.add('chosen-date')
         }
 
-        note_date.addEventListener('wheel', function(e) {
+        note_date.addEventListener('wheel', function (e) {
             let temp = note_date.innerHTML
             date = temp.split('/')
-            let new_date = new Date(date[2],date[1]-1,date[0])
+            let new_date = new Date(date[2], date[1] - 1, date[0])
 
             // wheel up midle mouse
             if (e.deltaY < 0) {
@@ -233,11 +240,11 @@
             }
 
             // regenerate new calendar match date in note_date
-            if (curr_month != date[1]-1 || curr_year != date[2]){
-                generateCalendar(date[1]-1, date[2])
-                curr_month = date[1]-1
+            if (curr_month != date[1] - 1 || curr_year != date[2]) {
+                generateCalendar(date[1] - 1, date[2])
+                curr_month = date[1] - 1
                 curr_year = date[2]
-            } 
+            }
 
             // move the calendar day box
             if (last_chosen_day != -1) {
