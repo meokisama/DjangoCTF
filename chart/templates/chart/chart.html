@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CTFGames - Cybersecurity Competition</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main/style.css' %}">
+    <link rel="shortcut icon" type="image/png" href="{% static 'main/logo-black.png' %}" />
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+    {% block content %}
+
+    <div style="min-height: 100vh;">
+
+        <div>
+            <h1 id="upcoming">Topics Analysis</h1>
+        </div>
+        <canvas id="radarChart"></canvas>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.0.1/chart.min.js"></script>
+    <script>
+
+        var ctx = document.getElementById('radarChart').getContext('2d');
+        var radarChart = new Chart(ctx, {
+            type: 'radar',
+            data: {
+
+                labels: ['RE', 'Pwnable', 'Web', 'Reverse'],
+                datasets: [
+                    {
+                        label: 'Challenges',
+                        data: [65, 59, 90, 81],
+                        fill: true,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        pointBackgroundColor: 'rgb(255, 99, 132)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgb(255, 99, 132)'
+                    },
+                    {
+                        label: 'Community Posts',
+                        data: [28, 48, 40, 19],
+                        fill: true,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgb(54, 162, 235)',
+                        pointBackgroundColor: 'rgb(54, 162, 235)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgb(54, 162, 235)'
+                    }]
+            },
+            options: {
+                elements: {
+                    line: {
+                        borderWidth: 3
+                    }
+                }
+            },
+        }
+        );
+
+    </script>
+
+
+    {% endblock content %}
+    {% include 'footer.html' %}
+</body>
+
+</html>

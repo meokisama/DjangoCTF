@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'main.apps.MainConfig',
     'community.apps.CommunityConfig',
     'news.apps.NewsConfig',
+    'chart.apps.ChartConfig',
 ]
 
 MIDDLEWARE = [
