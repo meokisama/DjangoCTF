@@ -705,13 +705,14 @@
   margin-right: auto;
 }
 
-.chart-title {
+.center-title {
   text-align: center;
 }
 
-.chart-title p {
+.h2-title-description {
   margin-top: -20px;
   padding-bottom: 20px;
+  color: #b2bdbd;
 }
 
 /* End of Chart */
