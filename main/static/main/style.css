@@ -705,4 +705,13 @@
   margin-right: auto;
 }
 
+.chart-title {
+  text-align: center;
+}
+
+.chart-title p {
+  margin-top: -20px;
+  padding-bottom: 20px;
+}
+
 /* End of Chart */
