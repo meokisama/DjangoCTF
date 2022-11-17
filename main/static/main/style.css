@@ -696,7 +696,13 @@
 /* Begin of Chart */
 
 .radar-container {
-  
+  background-color: white;
+  padding: 2rem 4rem;
+  width: 40%;
+  border-radius: 4rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* End of Chart */

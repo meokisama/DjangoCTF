@@ -19,23 +19,24 @@
         <div>
             <h1 id="upcoming">Topics Analysis</h1>
         </div>
-        <canvas id="radarChart"></canvas>
+        <div class="radar-container">
+            <canvas id="radarChart"></canvas>
+        </div>
 
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.0.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <script>
 
-        var ctx = document.getElementById('radarChart').getContext('2d');
-        var radarChart = new Chart(ctx, {
+        new Chart(document.getElementById('radarChart').getContext('2d'), {
             type: 'radar',
             data: {
-
-                labels: ['RE', 'Pwnable', 'Web', 'Reverse'],
+            
+                labels: [{% for topic in topics %}'{{topic}}',{% endfor %}],
                 datasets: [
                     {
                         label: 'Challenges',
-                        data: [65, 59, 90, 81],
+                        data: [{% for value in data_challenge %}'{{value}}',{% endfor %}],
                         fill: true,
                         backgroundColor: 'rgba(255, 99, 132, 0.2)',
                         borderColor: 'rgb(255, 99, 132)',
@@ -46,7 +47,7 @@
                     },
                     {
                         label: 'Community Posts',
-                        data: [28, 48, 40, 19],
+                        data: [{% for value in data_post %}'{{value}}',{% endfor %}],
                         fill: true,
                         backgroundColor: 'rgba(54, 162, 235, 0.2)',
                         borderColor: 'rgb(54, 162, 235)',
@@ -61,10 +62,11 @@
                     line: {
                         borderWidth: 3
                     }
-                }
+                },
             },
         }
         );
+
 
     </script>
 
