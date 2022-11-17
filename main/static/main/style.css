@@ -438,10 +438,10 @@
 }
 
 #calendar__header {
-    display: flex;
-    justify-content: space-around;
-    gap: 0.5rem;
-    padding-top: 1rem;
+  display: flex;
+  justify-content: space-around;
+  gap: 0.5rem;
+  padding-top: 1rem;
 }
 
 .month-change:hover {
@@ -525,7 +525,7 @@
   top: 0;
   left: 0;
   z-index: 2;
-  background-color: #3f4156;;
+  background-color: #3f4156;
   color: #b2bdbd;
   border-radius: 2rem;
 }
@@ -555,7 +555,7 @@
   left: 0;
   z-index: 2;
   border-radius: 2rem;
-  background-color: #3f4156;;
+  background-color: #3f4156;
   color: #b2bdbd;
 }
 
@@ -598,7 +598,6 @@
   transform: translate3d(0px, -0.25rem, 0px);
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.623);
 }
-
 
 .note-header {
   display: flex;
@@ -692,18 +691,36 @@
 }
 /* end of Calendar */
 
-
 /* Begin of Chart */
+
+.chart-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10rem;
+  padding: 0 15rem;
+}
 
 .radar-container {
   background-color: white;
   padding: 2rem 4rem;
-  width: 40%;
+  width: 75rem;
   border-radius: 4rem;
   display: block;
   margin-left: auto;
   margin-right: auto;
+  border-bottom: 7px solid #6d83f2 !important;
+  box-shadow: 0 0 0.3rem rgba(0, 0, 0, 0.16);
+  transition: all 0.3s ease-out;
+  transform: translateZ(0);
 }
+
+/* .radar-container:hover {
+  transform: translate3d(0px, -0.25rem, 0px);
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.32);
+} */
 
 .center-title {
   text-align: center;

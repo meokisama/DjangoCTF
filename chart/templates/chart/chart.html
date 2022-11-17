@@ -1,81 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>CTFGames - Cybersecurity Competition</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'main/style.css' %}">
-    <link rel="shortcut icon" type="image/png" href="{% static 'main/logo-black.png' %}" />
-</head>
+    <link rel="stylesheet" href="{% static 'main/style.css' %}" />
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="{% static 'main/logo-black.png' %}"
+    />
+  </head>
 
-<body>
-    {% include 'navbar.html' %}
-    {% block content %}
+  <body>
+    {% include 'navbar.html' %} {% block content %}
 
-    <div style="min-height: 100vh;">
-
+    <div style="min-height: 100vh">
+      <div class="chart-container">
         <div>
-            <div class="center-title">
-                <h1 id="upcoming">Topics Analysis</h1>
-                <p class="h2-title-description"><i>Compare the number of posts or challenges for each topic.</i></p>
-            </div>
-            <div class="radar-container">
-                <canvas id="radarChart"></canvas>
-            </div>
+          <div class="center-title">
+            <h1 id="upcoming">Topics Analysis</h1>
+            <p class="h2-title-description">
+              <i>Compare the number of posts or challenges for each topic.</i>
+            </p>
+          </div>
+          <div class="radar-container">
+            <canvas id="topicsAnalysis"></canvas>
+          </div>
         </div>
 
+        <div>
+          <div class="center-title">
+            <h1 id="upcoming">Most Try-hard Users</h1>
+            <p class="h2-title-description">
+              <i>These 5 users has resolved the most challenges.</i>
+            </p>
+          </div>
+          <div class="radar-container">
+            <canvas id="tryhardUser"></canvas>
+          </div>
+        </div>
+
+        <div>
+          <div class="center-title">
+            <h1 id="upcoming">Teams Scoreboard</h1>
+            <p class="h2-title-description">
+              <i>These 5 users has resolved the most challenges.</i>
+            </p>
+          </div>
+          <div class="radar-container" style="width:120rem;">
+            <canvas id="teamScoreboard"></canvas>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <script>
+      Chart.defaults.font.family = "Poppins";
 
-        new Chart(document.getElementById('radarChart').getContext('2d'), {
-            type: 'radar',
-            data: {
-            
-                labels: [{% for topic in topics %}'{{topic}}',{% endfor %}],
-                datasets: [
-                    {
-                        label: 'Challenges',
-                        data: [{% for value in data_challenge %}'{{value}}',{% endfor %}],
-                        fill: true,
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                        borderColor: 'rgb(255, 99, 132)',
-                        pointBackgroundColor: 'rgb(255, 99, 132)',
-                        pointBorderColor: '#fff',
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: 'rgb(255, 99, 132)'
-                    },
-                    {
-                        label: 'Community Posts',
-                        data: [{% for value in data_post %}'{{value}}',{% endfor %}],
-                        fill: true,
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                        borderColor: 'rgb(54, 162, 235)',
-                        pointBackgroundColor: 'rgb(54, 162, 235)',
-                        pointBorderColor: '#fff',
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: 'rgb(54, 162, 235)'
-                    }]
-            },
-            options: {
-                elements: {
-                    line: {
-                        borderWidth: 3
-                    }
-                },
-            },
-        }
-        );
+      //Radar Chart - Topics Analysis
+      new Chart(document.getElementById('topicsAnalysis').getContext('2d'), {
+          type: 'radar',
+          data: {
 
+              labels: [{% for topic in topics %}'{{topic}}',{% endfor %}],
+              datasets: [
+                  {
+                      label: 'Challenges',
+                      data: [{% for value in data_challenge %}'{{value}}',{% endfor %}],
+                      fill: true,
+                      backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                      borderColor: 'rgb(255, 99, 132)',
+                      pointBackgroundColor: 'rgb(255, 99, 132)',
+                      pointBorderColor: '#fff',
+                      pointHoverBackgroundColor: '#fff',
+                      pointHoverBorderColor: 'rgb(255, 99, 132)'
+                  },
+                  {
+                      label: 'Community Posts',
+                      data: [{% for value in data_post %}'{{value}}',{% endfor %}],
+                      fill: true,
+                      backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                      borderColor: 'rgb(54, 162, 235)',
+                      pointBackgroundColor: 'rgb(54, 162, 235)',
+                      pointBorderColor: '#fff',
+                      pointHoverBackgroundColor: '#fff',
+                      pointHoverBorderColor: 'rgb(54, 162, 235)'
+                  }]
+          },
+          options: {
+              elements: {
+                  line: {
+                      borderWidth: 3
+                  }
+              },
+          },
+      }
+      );
 
+      //Polar Area Chart - Most Try-hard Users
+      new Chart(document.getElementById('tryhardUser').getContext('2d'), {
+          type: 'polarArea',
+          data: {
+              labels: [
+              'Red',
+              'Green',
+              'Yellow',
+              'Grey',
+              'Blue'
+            ],
+            datasets: [{
+              label: 'Most Try-hard Users',
+              data: [11, 16, 7, 3, 14],
+              backgroundColor: [
+                'rgb(255, 99, 132)',
+                'rgb(75, 192, 192)',
+                'rgb(255, 205, 86)',
+                'rgb(201, 203, 207)',
+                'rgb(54, 162, 235)'
+              ]
+            }]
+          },
+          options: {}
+      }
+      );
+
+      //Line Chart - Teams Scoreboard
+      new Chart(document.getElementById('teamScoreboard').getContext('2d'), {
+          type: 'line',
+          data: {
+              labels: ['CTF1','CTF2','CTF3','CTF4','CTF5','CTF6','CTF7',],
+              datasets: [
+              {
+                label: 'Team 1',
+                data: [65, 59, 80, 81, 56, 55, 40],
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+              },
+              {
+                label: 'Team 2',
+                data: [50, 49, 75, 64, 70, 61, 69],
+                fill: false,
+                borderColor: 'rgb(255, 99, 132)',
+                tension: 0.1
+              },
+          ]
+          },
+      }
+      );
     </script>
 
-
-    {% endblock content %}
-    {% include 'footer.html' %}
-</body>
-
+    {% endblock content %} {% include 'footer.html' %}
+  </body>
 </html>
