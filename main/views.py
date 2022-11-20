@@ -7,8 +7,12 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
+from json import dumps
+import json
+
 User = get_user_model()
 from .models import Challenge
+from community.models import Note
 
 # Create your views here.
 
@@ -27,6 +31,33 @@ def challenge(request):
     return render(request, './menu/challenge.html')
 
 def calendar(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            [d,m,y]= str(request.POST.get('note_date')).split('/')
+            new_note = Note.objects.create(
+                user=User.objects.get(pk=request.user.id),
+                date= y + "-" + m + "-"+ d,
+                content=request.POST.get('note_content')
+            )
+            new_note.save()
+            return redirect('calendar')
+
+        user = User.objects.get(pk=request.user.id)
+        notes = user.note_set.all()
+        dict_note = {}
+        for note in notes:
+            time = str(note.date).split(' ')[0]
+            [year, month, day] = time.split('-')
+            if "y" + year + "m" + month not in str(dict_note.keys()):
+                dict_note["y" + year + "m" + month] = {}
+            dict_note["y" + year + "m" + month].update({"d" + day : note.content})
+
+        data_note = dumps(dict_note)
+        content = {'data_note':data_note}
+        return render(request, 'menu/calendar.html', content)
+    else:
+        if request.method == 'POST':
+            return redirect('login')
     return render(request, 'menu/calendar.html')
 
 def chart(request):

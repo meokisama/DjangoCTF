@@ -50,3 +50,14 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.body[0:50]
+
+class Note(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateTimeField(editable=True)
+    content = models.TextField()
+
+    class Meta:
+        ordering = ['-date']
+    
+    def __str__(self):
+        return self.content

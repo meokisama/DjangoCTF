@@ -52,8 +52,10 @@
                 <div class="note-body">
                     <div class="note-date"></div>
                     <div class="note-content">
-                        <form action="#">
-                            <textarea id="note-text" placeholder="Write down some note..."></textarea>
+                        <form method="POST" action="#">
+                            {% csrf_token %}
+                            <textarea hidden id="form-note-date" name="note_date"></textarea>
+                            <textarea id="note-text" name="note_content" placeholder="Write down some note..."></textarea>
                             <input type="submit" value="Save">
                         </form>
                     </div>
@@ -106,7 +108,15 @@
 
                     day.onclick = () => {
                         let date = day.innerHTML + "/" + (curr_month + 1) + "/" + curr_year
-                        document.querySelector('.note-date').innerHTML = date
+                        note_date.innerHTML = date
+                        form_note_date.innerHTML = note_date.innerHTML
+
+                        let key = "y" + curr_year + "m" + ((curr_month + 1 < 10)?("0" + (curr_month + 1)):(curr_month + 1))
+                        if (data[key] != null && data[key]["d" + day.innerHTML] != null) 
+                            document.getElementById("note-text").innerHTML = data[key]["d" + day.innerHTML]
+                        else
+                            document.getElementById("note-text").innerHTML = null
+
                         if (last_chosen_day != -1) {
                             calendar.querySelector('.c' + last_chosen_day).classList.remove('chosen-date')
                         }
@@ -143,13 +153,20 @@
             year_list.classList.remove('show')
         }
 
+        let data = ''
+        let str_data = "{{data_note|escapejs}}"
+        if (str_data != '')
+            data = JSON.parse(str_data)
+
         let currDate = new Date()
         let curr_month = currDate.getMonth()
         let curr_year = currDate.getFullYear()
         let note_date = document.querySelector('.note-date')
         note_date.innerHTML = currDate.getDate() + "/" + (curr_month + 1) + "/" + curr_year
-        let ten_years = []
+        let form_note_date = document.getElementById('form-note-date')
+        form_note_date.innerHTML = note_date.innerHTML
         let year_list = document.querySelector('.year-list')
+        let ten_years = []
 
         generateCalendar(curr_month, curr_year)
 
@@ -238,6 +255,8 @@
                 date[2] = new_date.getFullYear();
                 note_date.innerHTML = date[0] + '/' + date[1] + '/' + date[2]
             }
+
+            form_note_date.innerHTML = note_date.innerHTML
 
             // regenerate new calendar match date in note_date
             if (curr_month != date[1] - 1 || curr_year != date[2]) {
