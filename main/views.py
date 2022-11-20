@@ -34,12 +34,22 @@ def calendar(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
             [d,m,y]= str(request.POST.get('note_date')).split('/')
-            new_note, created = Note.objects.get_or_create(
-                user=User.objects.get(pk=request.user.id),
-                date= y + "-" + m + "-"+ d,
-                content=request.POST.get('note_content')
-            )
-            new_note.save()
+            user = User.objects.get(pk=request.user.id)
+            date = y + "-" + m + "-"+ d
+            content = request.POST.get('note_content')
+            if content != '':
+                try:
+                    note = Note.objects.filter(user=user).get(date=date)
+                    note.content = request.POST.get('note_content')
+                except:
+                    note = Note.objects.create(user=user,date=date,content=content)
+                note.save()
+            else:
+                try:
+                    Note.objects.filter(user=user).get(date=date).delete()
+                except:
+                    messages.info(request, "Note content cann't be empty")
+
             return redirect('calendar')
 
         user = User.objects.get(pk=request.user.id)
@@ -48,6 +58,10 @@ def calendar(request):
         for note in notes:
             time = str(note.date).split(' ')[0]
             [year, month, day] = time.split('-')
+            if month.startswith("0"):
+                month = month[1]
+            if day.startswith("0"):
+                day = day[1]
             if "y" + year + "m" + month not in str(dict_note.keys()):
                 dict_note["y" + year + "m" + month] = {}
             dict_note["y" + year + "m" + month].update({"d" + day : note.content})
