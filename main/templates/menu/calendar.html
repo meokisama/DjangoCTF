@@ -96,6 +96,8 @@
             let first_day = new Date(year, month, 1).getDay()
             if (first_day == 0) { first_day = 7 }
 
+            let key = "y" + curr_year + "m" + ((curr_month + 1 < 10)?("0" + (curr_month + 1)):(curr_month + 1))
+
             for (let i = 0; i <= days_of_month[month] + first_day - 2; i++) {
                 let day = document.createElement('div')
                 if (i >= first_day - 1) {
@@ -104,15 +106,18 @@
                     day.innerHTML = i - first_day + 2
                     if (i - first_day + 2 == currDate.getDate() && year == currDate.getFullYear() && month == currDate.getMonth()) {
                         day.classList.add('curr-date')
+                        if (note_date.innerHTML == day.innerHTML + "/" + (curr_month + 1) + "/" + curr_year) 
+                            document.getElementById("note-text").innerHTML = data[key]["d" + day.innerHTML]
                     }
+                    if (data[key] != null && data[key]["d" + day.innerHTML] != null) 
+                        day.classList.add('day-have-note')
 
                     day.onclick = () => {
                         let date = day.innerHTML + "/" + (curr_month + 1) + "/" + curr_year
                         note_date.innerHTML = date
                         form_note_date.innerHTML = note_date.innerHTML
 
-                        let key = "y" + curr_year + "m" + ((curr_month + 1 < 10)?("0" + (curr_month + 1)):(curr_month + 1))
-                        if (data[key] != null && data[key]["d" + day.innerHTML] != null) 
+                        if (day.classList.contains('day-have-note')) 
                             document.getElementById("note-text").innerHTML = data[key]["d" + day.innerHTML]
                         else
                             document.getElementById("note-text").innerHTML = null
@@ -155,9 +160,12 @@
 
         let data = ''
         let str_data = "{{data_note|escapejs}}"
-        if (str_data != '')
-            data = JSON.parse(str_data)
-
+        if (str_data != '') {
+            try {
+                data = JSON.parse(str_data)
+            } catch (err) {}
+        }
+        
         let currDate = new Date()
         let curr_month = currDate.getMonth()
         let curr_year = currDate.getFullYear()

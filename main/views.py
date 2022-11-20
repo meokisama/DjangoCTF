@@ -34,7 +34,7 @@ def calendar(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
             [d,m,y]= str(request.POST.get('note_date')).split('/')
-            new_note = Note.objects.create(
+            new_note, created = Note.objects.get_or_create(
                 user=User.objects.get(pk=request.user.id),
                 date= y + "-" + m + "-"+ d,
                 content=request.POST.get('note_content')

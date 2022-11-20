@@ -587,6 +587,13 @@
   color: #6d6b6b;
 }
 
+.day-have-note {
+  background-color: yellowgreen;
+  border-radius:  50%;
+  font-weight: bold;
+  color: white;
+}
+
 .note {
   width: calc(40% - 2px);
   border-radius: 2rem;
