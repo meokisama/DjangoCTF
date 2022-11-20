@@ -56,7 +56,8 @@
                             {% csrf_token %}
                             <textarea hidden id="form-note-date" name="note_date"></textarea>
                             <textarea id="note-text" name="note_content" placeholder="Write down some note..."></textarea>
-                            <input type="submit" value="Save">
+                            <textarea readonly="true" id="system-note"></textarea>
+                            <input type="submit" value="Save" id="h">
                         </form>
                     </div>
                 </div>
@@ -107,7 +108,9 @@
                     if (i - first_day + 2 == currDate.getDate() && year == currDate.getFullYear() && month == currDate.getMonth()) {
                         day.classList.add('curr-date')
                         if (note_date.innerHTML == day.innerHTML + "/" + (curr_month + 1) + "/" + curr_year) 
-                            document.getElementById("note-text").innerHTML = data[key]["d" + day.innerHTML]
+                            try {
+                                document.getElementById("note-text").innerHTML = data[key]["d" + day.innerHTML]
+                            } catch (err) {}
                     }
                     if (data[key] != null && data[key]["d" + day.innerHTML] != null) 
                         day.classList.add('day-have-note')
@@ -118,7 +121,9 @@
                         form_note_date.innerHTML = note_date.innerHTML
 
                         if (day.classList.contains('day-have-note')) 
-                            document.getElementById("note-text").innerHTML = data[key]["d" + day.innerHTML]
+                            try {
+                                document.getElementById("note-text").innerHTML = data[key]["d" + day.innerHTML]
+                            } catch (err) {}
                         else
                             document.getElementById("note-text").innerHTML = null
 

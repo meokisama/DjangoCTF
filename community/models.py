@@ -53,7 +53,7 @@ class Comment(models.Model):
 
 class Note(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    date = models.DateTimeField(editable=True)
+    date = models.DateField(editable=True)
     content = models.TextField()
 
     class Meta:
