@@ -165,7 +165,7 @@
                 data = JSON.parse(str_data)
             } catch (err) {}
         }
-        
+
         let currDate = new Date()
         let curr_month = currDate.getMonth()
         let curr_year = currDate.getFullYear()
@@ -229,9 +229,9 @@
             let temp = note_date.innerHTML
             date = temp.split('/')
             if (curr_year != date[2] || curr_month != date[1] - 1) {
-                generateCalendar(date[1] - 1, date[2])
                 curr_month = date[1] - 1
                 curr_year = date[2]
+                generateCalendar(curr_month, curr_year)
             }
 
             if (last_chosen_day != -1) {
@@ -268,9 +268,9 @@
 
             // regenerate new calendar match date in note_date
             if (curr_month != date[1] - 1 || curr_year != date[2]) {
-                generateCalendar(date[1] - 1, date[2])
                 curr_month = date[1] - 1
                 curr_year = date[2]
+                generateCalendar(curr_month, curr_year)
             }
 
             // move the calendar day box
