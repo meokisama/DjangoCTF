@@ -22,4 +22,5 @@ urlpatterns = [
     path('community/', include("community.urls")),
     path('news/', include("news.urls")),
     path('challenge/', include("challenge.urls")),
+    path('chart/', include("chart.urls")),
 ]

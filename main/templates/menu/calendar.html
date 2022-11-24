@@ -52,8 +52,11 @@
                 <div class="note-body">
                     <div class="note-date"></div>
                     <div class="note-content">
-                        <form action="#">
-                            <textarea id="note-text" placeholder="Write down some note..."></textarea>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <textarea hidden id="form-note-date" name="note_date"></textarea>
+                            <textarea id="note-text" name="note_content" placeholder="Write down some note..."></textarea>
+                            <textarea readonly="true" id="system-note"></textarea>
                             <input type="submit" value="Save">
                         </form>
                     </div>
@@ -94,6 +97,8 @@
             let first_day = new Date(year, month, 1).getDay()
             if (first_day == 0) { first_day = 7 }
 
+            let key = "y" + curr_year + "m" + (curr_month + 1)
+
             for (let i = 0; i <= days_of_month[month] + first_day - 2; i++) {
                 let day = document.createElement('div')
                 if (i >= first_day - 1) {
@@ -102,11 +107,26 @@
                     day.innerHTML = i - first_day + 2
                     if (i - first_day + 2 == currDate.getDate() && year == currDate.getFullYear() && month == currDate.getMonth()) {
                         day.classList.add('curr-date')
+                        if (note_date.innerHTML == day.innerHTML + "/" + (curr_month + 1) + "/" + curr_year) 
+                            try {
+                                document.getElementById("note-text").innerHTML = data[key]["d" + day.innerHTML]
+                            } catch (err) {}
                     }
+                    if (data[key] != null && data[key]["d" + day.innerHTML] != null) 
+                        day.classList.add('day-have-note')
 
                     day.onclick = () => {
                         let date = day.innerHTML + "/" + (curr_month + 1) + "/" + curr_year
-                        document.querySelector('.note-date').innerHTML = date
+                        note_date.innerHTML = date
+                        form_note_date.innerHTML = note_date.innerHTML
+
+                        if (day.classList.contains('day-have-note')) 
+                            try {
+                                document.getElementById("note-text").innerHTML = data[key]["d" + day.innerHTML]
+                            } catch (err) {}
+                        else
+                            document.getElementById("note-text").innerHTML = null
+
                         if (last_chosen_day != -1) {
                             calendar.querySelector('.c' + last_chosen_day).classList.remove('chosen-date')
                         }
@@ -143,13 +163,23 @@
             year_list.classList.remove('show')
         }
 
+        let data = ''
+        let str_data = "{{data_note|escapejs}}"
+        if (str_data != '') {
+            try {
+                data = JSON.parse(str_data)
+            } catch (err) {}
+        }
+
         let currDate = new Date()
         let curr_month = currDate.getMonth()
         let curr_year = currDate.getFullYear()
         let note_date = document.querySelector('.note-date')
         note_date.innerHTML = currDate.getDate() + "/" + (curr_month + 1) + "/" + curr_year
-        let ten_years = []
+        let form_note_date = document.getElementById('form-note-date')
+        form_note_date.innerHTML = note_date.innerHTML
         let year_list = document.querySelector('.year-list')
+        let ten_years = []
 
         generateCalendar(curr_month, curr_year)
 
@@ -204,9 +234,9 @@
             let temp = note_date.innerHTML
             date = temp.split('/')
             if (curr_year != date[2] || curr_month != date[1] - 1) {
-                generateCalendar(date[1] - 1, date[2])
                 curr_month = date[1] - 1
                 curr_year = date[2]
+                generateCalendar(curr_month, curr_year)
             }
 
             if (last_chosen_day != -1) {
@@ -239,11 +269,13 @@
                 note_date.innerHTML = date[0] + '/' + date[1] + '/' + date[2]
             }
 
+            form_note_date.innerHTML = note_date.innerHTML
+
             // regenerate new calendar match date in note_date
             if (curr_month != date[1] - 1 || curr_year != date[2]) {
-                generateCalendar(date[1] - 1, date[2])
                 curr_month = date[1] - 1
                 curr_year = date[2]
+                generateCalendar(curr_month, curr_year)
             }
 
             // move the calendar day box
