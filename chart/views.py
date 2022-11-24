@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from community.models import Topic, Post
-from main.models import Challenge
+from challenge.models import Challenge
 
 # Create your views here.
 def chart(request):

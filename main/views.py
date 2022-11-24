@@ -11,7 +11,6 @@ from json import dumps
 import json
 
 User = get_user_model()
-from .models import Challenge
 from community.models import Note
 
 # Create your views here.
