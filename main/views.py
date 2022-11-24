@@ -8,23 +8,22 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 User = get_user_model()
-from .models import Challenge
 
 # Create your views here.
 
 def home(request):
-    challenges = Challenge.objects.all()
-    context = {'challenges':challenges}
-    return render(request, 'index.html',context)
+    # challenges = Challenge.objects.all()
+    # context = {'challenges':challenges}
+    return render(request, 'index.html')
 
-def challenge(request):
-    # challenge = Challenge.objects.get(id=pk)
-    # challenge = None
-    # for i in challenges:
-    #     if i['id']==int(pk):
-    #       challenge=i
-    # context = {'challenge':challenge}
-    return render(request, './menu/challenge.html')
+# def challenge(request):
+#     challenge = Challenge.objects.get(id=pk)
+#     challenge = None
+#     for i in challenges:
+#         if i['id']==int(pk):
+#           challenge=i
+#     context = {'challenge':challenge}
+#     return render(request, './menu/challenge.html')
 
 def calendar(request):
     return render(request, 'menu/calendar.html')

@@ -1,0 +1,351 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+#logo {
+  width: 35px;
+  height: 35px;
+}
+
+.login-wrapper > * {
+  box-sizing: border-box;
+}
+
+.login-wrapper {
+  background: #212529;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: "Montserrat", sans-serif;
+  height: 100vh;
+}
+
+.login-wrapper h1 {
+  font-weight: bold !important;
+  margin: 0;
+  color: white;
+  font-size: 3rem !important;
+  font-family: "Montserrat", sans-serif;
+}
+
+.login-wrapper h2 {
+  text-align: center !important;
+  font-family: "Montserrat", sans-serif;
+}
+
+.login-wrapper p {
+  font-size: 14px;
+  font-weight: 200;
+  line-height: 20px;
+  letter-spacing: 0.5px;
+  margin: 20px 0 30px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.login-wrapper span {
+  font-size: 12px;
+  color: white;
+  font-family: "Montserrat", sans-serif;
+}
+
+.login-wrapper a {
+  color: white;
+  font-size: 14px;
+  text-decoration: none;
+  margin: 15px 0;
+  font-family: "Montserrat", sans-serif;
+}
+
+.login-wrapper button {
+  border-radius: 20px;
+  border: 1px solid #4966f5;
+  background-color: #4966f5;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 80ms ease-in;
+  font-family: "Montserrat", sans-serif;
+}
+
+.login-wrapper button:active {
+  transform: scale(0.95);
+}
+
+.login-wrapper button:focus {
+  outline: none;
+}
+
+.login-wrapper button.ghost {
+  background-color: transparent;
+  border-color: #ffffff;
+}
+
+.login-wrapper form {
+  background-color: #2c2c2c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 50px;
+  height: 100%;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+}
+
+.login-wrapper input {
+  background-color: #eee;
+  border: none;
+  padding: 12px 15px;
+  margin: 8px 0;
+  width: 100%;
+  border-radius: 15px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.login-container {
+  background-color: #2c2c2c;
+  border-radius: 15px;
+  border: none;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.363), 0 10px 10px rgba(0, 0, 0, 0.363);
+  position: relative;
+  overflow: hidden;
+  width: 768px;
+  max-width: 100%;
+  min-height: 480px;
+}
+
+.form-container {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  transition: all 0.6s ease-in-out;
+}
+
+.sign-in-container {
+  left: 0;
+  width: 50%;
+  z-index: 2;
+}
+
+.login-container.right-panel-active .sign-in-container {
+  transform: translateX(100%);
+}
+
+.sign-up-container {
+  left: 0;
+  width: 50%;
+  opacity: 0;
+  z-index: 1;
+}
+
+.login-container.right-panel-active .sign-up-container {
+  transform: translateX(100%);
+  opacity: 1;
+  z-index: 5;
+  animation: show 0.6s;
+}
+
+@keyframes show {
+  0%,
+  49.99% {
+    opacity: 0;
+    z-index: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 1;
+    z-index: 5;
+  }
+}
+
+.overlay-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  transition: transform 0.6s ease-in-out;
+  z-index: 100;
+}
+
+.login-container.right-panel-active .overlay-container {
+  transform: translateX(-100%);
+}
+
+.login-wrapper .overlay {
+  background: #6d83f2;
+  background: -webkit-linear-gradient(to right, #4966f5, #6d83f2);
+  background: linear-gradient(to right, #4966f5, #6d83f2);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 0 0;
+  color: #ffffff;
+  position: relative;
+  left: -100%;
+  height: 100%;
+  width: 200%;
+  transform: translateX(0);
+  transition: transform 0.6s ease-in-out;
+}
+
+.login-container.right-panel-active .overlay {
+  transform: translateX(50%);
+}
+
+.login-wrapper .overlay-panel {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 40px;
+  text-align: center;
+  top: 0;
+  height: 100%;
+  width: 50%;
+  transform: translateX(0);
+  transition: transform 0.6s ease-in-out;
+}
+
+.overlay-left {
+  transform: translateX(-20%);
+}
+
+.login-container.right-panel-active .overlay-left {
+  transform: translateX(0);
+}
+
+.overlay-right {
+  right: 0;
+  transform: translateX(0);
+}
+
+.login-container.right-panel-active .overlay-right {
+  transform: translateX(20%);
+}
+
+.social-container {
+  margin: 20px 0;
+}
+
+.social-container a {
+  border: 1px solid #dddddd;
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 5px;
+  height: 40px;
+  width: 40px;
+}
+
+/* Start of event card*/
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding-top: 15px;
+  height: 100%;
+  border-radius: 20px !important;
+  background-color: #2c2c2c !important;
+  border-bottom: 7px solid #6d83f2 !important;
+  box-shadow: 0 0 0.3rem rgba(0, 0, 0, 0.16);
+  transition: all 0.3s ease-out;
+  transform: translateZ(0);
+}
+
+.card:hover {
+  transform: translate3d(0px, -0.25rem, 0px);
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.32);
+}
+
+.card-title {
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-size: 2rem;
+  line-height: 1.3;
+  color: #e5e5e5;
+  height: 6rem;
+}
+
+#section-event {
+  background-color: #1c1c1c;
+}
+
+#upcoming {
+  font-weight: 800;
+  color: #e5e5e5;
+  font-size: 3rem;
+  text-align: center;
+  padding: 20px;
+  font-family: "Roboto", sans-serif;
+}
+
+.ThumbnailWrapper {
+  position: relative;
+  width: 100%;
+  margin-top: -20px;
+}
+
+.card img {
+  height: 250px;
+}
+
+.InnerWrapper {
+  overflow: hidden;
+}
+
+.ThumbnailWrapper::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.15);
+  transition: 0.3s ease;
+}
+
+.card-text {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  justify-content: space-between;
+  padding: 24px;
+}
+
+.card-text > * {
+  display: block;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.card-description {
+  line-height: 1.5;
+  margin-top: 8px;
+  font-family: "Fira Sans Condensed", sans-serif;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-break: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+/* End of event card*/
+
+#nav-menu {
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+}

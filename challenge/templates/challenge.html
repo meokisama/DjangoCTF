@@ -20,7 +20,9 @@
         <div>
             <h1>Your challenge</h1>
         </div>
-        <p>You haven't created any challenges yet. <a href="">Click here to create one.</a></p>
+        <p>You haven't created any challenges yet.
+            <a href="{% url 'create_challenge' %}">Click here to create one.</a>
+        </p>
     </section>
 
     {% endblock content %}
