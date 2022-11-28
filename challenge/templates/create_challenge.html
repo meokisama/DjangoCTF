@@ -29,21 +29,34 @@
                     Start From
                     {% endif %}
                     {% if field.name == "date_end" %}
-                    To
+                    Finish At 
                     {% endif %}
                     {% if field.name == "description" %}
                     Description
                     {% endif %}
                 </label>
+                {% if field.name == "name" %}
+                <div class="form-control bg-transparent border-0">
+                    <input class="form-control bg-transparent border-2" rows="4" style="border-color: #696d97;"
+                    name="{{ field.name }}" id="{{ field.name }}" >
+                </div>
+                {% endif %}
+                {% if field.name == "date_start" %}
+                <div class="form-control bg-transparent border-0">
+                    <p class="" style="border-color: #696d97;"
+                    name="{{ field.name }}" id="{{ field.name }}" >{{ form.date_start }}</p>
+                </div>
+                {% endif %}
+                {% if field.name == "date_end" %}
+                <div class="form-control bg-transparent border-0">
+                    <p class="" style="border-color: #696d97;"
+                    name="{{ field.name }}" id="{{ field.name }}" >{{ form.date_end }}</p>
+                </div>
+                {% endif %}
                 {% if field.name == "description" %}
                 <div class="form-control bg-transparent border-0">
                     <textarea type="text" class="form-control bg-transparent border-2" rows="4" style="border-color: #696d97;"
                     name="{{ field.name }}" id="{{ field.name }}" ></textarea>
-                </div>
-                {% else %}
-                <div class="form-control bg-transparent border-0">
-                    <input type="text" class="form-control bg-transparent border-2" rows="4" style="border-color: #696d97;"
-                    name="{{ field.name }}" id="{{ field.name }}" >
                 </div>
                 {% endif %}
                 {% endfor %}
