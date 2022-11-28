@@ -109,7 +109,8 @@
                         day.classList.add('curr-date')
                         if (note_date.innerHTML == day.innerHTML + "/" + (curr_month + 1) + "/" + curr_year) 
                             try {
-                                document.getElementById("note-text").innerHTML = data[key]["d" + day.innerHTML]
+                                if (data[key]["d" + day.innerHTML] != null)
+                                    document.getElementById("note-text").innerHTML = data[key]["d" + day.innerHTML]
                             } catch (err) {}
                     }
                     if (data[key] != null && data[key]["d" + day.innerHTML] != null) 

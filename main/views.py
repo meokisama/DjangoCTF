@@ -47,7 +47,7 @@ def calendar(request):
                 try:
                     Note.objects.filter(user=user).get(date=date).delete()
                 except:
-                    messages.info(request, "Note content cann't be empty")
+                    messages.info(request, "Note content can't be empty")
 
             return redirect('calendar')
 
