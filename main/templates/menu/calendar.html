@@ -160,8 +160,12 @@
         let year_picker = calendar.querySelector('#year-picker')
 
         month_picker.onclick = () => {
-            month_list.classList.add('show')
-            year_list.classList.remove('show')
+            if (!month_list.classList.contains('show')) {
+                month_list.classList.add('show')
+                year_list.classList.remove('show')
+            } else {
+                month_list.classList.remove('show')
+            }
         }
 
         let data = ''
@@ -203,8 +207,12 @@
 
         year_picker.onclick = () => {
             generateTenYears(curr_year)
-            year_list.classList.add('show')
-            month_list.classList.remove('show')
+            if (!year_list.classList.contains('show')) {
+                year_list.classList.add('show')
+                month_list.classList.remove('show')
+            } else {
+                year_list.classList.remove('show')
+            }
         }
 
         document.querySelector('#prev-month').onclick = () => {
