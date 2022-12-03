@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CTFGames - Cybersecurity Competition</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'main/style.css' %}">
+    <link rel="stylesheet" href="{% static 'main/challenge.css' %}?{% now " U" %}">
     <link rel="shortcut icon" type="image/png" href="{% static 'main/logo-black.png' %}" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -14,15 +14,10 @@
 
 <body>
     {% include 'navbar.html' %}
-    {% block content %}
-        <div class="container">
-            <section class="text-light p-5 bg-dark" id="section-event">
-                <div>
-                    <h1>Your challenge</h1>
-                </div>
-                <p>You haven't created any challenges yet. <a href="{% url 'create_challenge' %}">Click here to create one.</a></p>
-            </section>
-        </div>
+    {% block content %} 
+    <h1>create_challenge_quizz</h1>
+    {% csrf_token %}
+    {{name}}
     {% endblock content %}
     {% include 'footer.html' %}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
