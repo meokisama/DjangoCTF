@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CTFGames - Cybersecurity Competition</title>
     {% load static %}
-    <link rel="stylesheet" href="../../static/main/style.css">
+    <link rel="stylesheet" href="{% static 'main/style.css' %}?{% now " U" %}">
     <link rel="shortcut icon" type="image/png" href="{% static 'main/logo-black.png' %}" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -14,6 +14,13 @@
 
 <body>
     {% include 'navbar.html' %}
+    {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+            <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
     {% block content %}
     <div style="min-height:100vh;">
         <div class="main">
@@ -143,31 +150,6 @@
             last_chosen_day = -1
         }
 
-        let month_list = calendar.querySelector('.month-list')
-
-        month_names.forEach((e, index) => {
-            let month = document.createElement('div')
-            month.innerHTML = `<div>${e}</div>`
-            month.querySelector('div').onclick = () => {
-                month_list.classList.remove('show')
-                curr_month = index
-                generateCalendar(curr_month, curr_year)
-            }
-            month_list.appendChild(month)
-        })
-
-        let month_picker = calendar.querySelector('#month-picker')
-        let year_picker = calendar.querySelector('#year-picker')
-
-        month_picker.onclick = () => {
-            if (!month_list.classList.contains('show')) {
-                month_list.classList.add('show')
-                year_list.classList.remove('show')
-            } else {
-                month_list.classList.remove('show')
-            }
-        }
-
         let data = ''
         let str_data = "{{data_note|escapejs}}"
         if (str_data != '') {
@@ -176,17 +158,46 @@
             } catch (err) {}
         }
 
-        let currDate = new Date()
-        let curr_month = currDate.getMonth()
-        let curr_year = currDate.getFullYear()
+        let today = new Date()
+        let curr_month = today.getMonth()
+        let curr_year = today.getFullYear()
         let note_date = document.querySelector('.note-date')
-        note_date.innerHTML = currDate.getDate() + "/" + (curr_month + 1) + "/" + curr_year
+        note_date.innerHTML = today.getDate() + "/" + (curr_month + 1) + "/" + curr_year
+
         let form_note_date = document.getElementById('form-note-date')
         form_note_date.innerHTML = note_date.innerHTML
         let year_list = document.querySelector('.year-list')
         let ten_years = []
 
+        let month_list = calendar.querySelector('.month-list')
+        let month_picker = calendar.querySelector('#month-picker')
+        let year_picker = calendar.querySelector('#year-picker')
+
         generateCalendar(curr_month, curr_year)
+
+        month_picker.onclick = () => {
+            if (curr_year == today.getFullYear()) 
+                month_list.querySelector('div:nth-child(' + (today.getMonth() + 1) + ')').classList.add('curr-month')
+            else 
+                month_list.querySelector('div:nth-child(' + (today.getMonth() + 1) + ')').classList.remove('curr-month')
+            if (!month_list.classList.contains('show')) {
+                month_list.classList.add('show')
+                year_list.classList.remove('show')
+            } else {
+                month_list.classList.remove('show')
+            }
+        }
+
+        month_names.forEach((e, index) => {
+            let month = document.createElement('div')
+            month.innerHTML = `<p>${e}</p>`
+            month.onclick = () => {
+                month_list.classList.remove('show')
+                curr_month = index
+                generateCalendar(curr_month, curr_year)
+            }
+            month_list.appendChild(month)
+        })
 
         generateTenYears = (year) => {
             for (let i = 0; i < 10; i++) {
@@ -195,8 +206,10 @@
             year_list.innerHTML = ''
             ten_years.forEach((e, index) => {
                 let year = document.createElement('div')
-                year.innerHTML = `<div>${e}</div>`
-                year.querySelector('div').onclick = () => {
+                year.innerHTML = `<p>${e}</p>`
+                if (e == today.getFullYear())
+                    year.classList.add('curr-year')
+                year.onclick = () => {
                     year_list.classList.remove('show')
                     curr_year = e
                     generateCalendar(curr_month, curr_year)
@@ -253,6 +266,9 @@
             }
             last_chosen_day = date[0]
             calendar.querySelector('.c' + date[0]).classList.add('chosen-date')
+
+            year_list.classList.remove('show')
+            month_list.classList.remove('show')
         }
 
         note_date.addEventListener('wheel', function (e) {
