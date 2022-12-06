@@ -266,6 +266,12 @@
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.32);
 }
 
+#quizz-card
+{
+  transform: translate3d(0px, 0px, 0px);
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.32);
+}
+
 .card-title {
   font-family: "Roboto", sans-serif;
   font-weight: 900;
