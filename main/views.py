@@ -8,7 +8,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from json import dumps
-import json
+from django.views.generic import ListView
+from challenge.models import Challenge
 
 User = get_user_model()
 from community.models import Note
@@ -118,3 +119,24 @@ def userLogin(request):
 def user_logout(request):
     logout(request)
     return redirect("home")
+
+class ChallengeListView(ListView):
+    model = Challenge
+    context_object_name = 'object_list'
+    template_name = 'index.html'
+    ordering = 'day_created'
+    paginate_by = 3
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        #print(context['object_list'])
+        #context['object_list'] = context.keys()
+        #context['object_list'] = Challenge.objects.filter(name__contains = (self.request.GET.get('q') or ''))
+        return context
+
+    def get_queryset(self):
+        queryset = Challenge.objects.filter(name__contains = (self.request.GET.get('q') or ''))
+        return queryset
+
+
+

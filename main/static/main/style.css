@@ -343,6 +343,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: left;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 /* End of event card*/
 
@@ -510,6 +512,14 @@
   text-align: center;
 }
 
+.curr-month {
+  background-color: #696d97;
+}
+
+.curr-year {
+  background-color: #696d97;
+}
+
 .month-list {
   display: grid;
   grid-template-columns: repeat(4, auto);
@@ -532,6 +542,12 @@
 
 .month-list div {
   border: 2px solid transparent;
+  border-radius: 5%;
+  width: 80%;
+  height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .month-list div:hover {
@@ -561,6 +577,12 @@
 
 .year-list div {
   border: 2px solid transparent;
+  border-radius: 5%;
+  width: 80%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .year-list div:hover {
