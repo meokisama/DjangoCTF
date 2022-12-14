@@ -136,7 +136,7 @@ class ChallengeListView(ListView):
 
     def get_queryset(self):
         queryset = Challenge.objects.filter(name__contains = (self.request.GET.get('q') or ''))
-        queryset.order_by('day_created')
+        queryset.order_by('date_created')
         return queryset
 
 
