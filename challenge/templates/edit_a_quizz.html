@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CTFGames - Cybersecurity Competition</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main/challenge.css' %}?{% now " U" %}">
+    <link rel="shortcut icon" type="image/png" href="{% static 'main/logo-black.png' %}" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+    {% block content %}
+    <div class="container text-center">
+        <div class="h1">Create quizzes</div>
+    </div>
+
+    <form action="" method="post" autocomplete="off">
+        <!-- Quizz Section -->
+
+        <!-- <div class="container row">
+            <div class="col-3 text-center d-flex justify-content-end d-none">
+                <button type="button" class="btn btn-lg my-auto btn-primary bg-transparent align-middle me-5 fs-5"
+                    style="background-color: #696d97!important;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-caret-left" viewBox="0 0 16 16">
+                        <path
+                            d="M10 12.796V3.204L4.519 8 10 12.796zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z" />
+                    </svg>
+                    Previous
+                </button>
+            </div> -->
+
+            <div class="card col-sm-6 pt-0 rounded-4 mt-5 mx-auto" id="quizz-card1">
+                <div class="container text-end w-100">
+                    <button type="button" onclick="delQuizz(event)" id="delQuizzBtn"
+                        class="btn-close-white btn-close me-0" aria-label="Close"></button>
+                </div>
+
+                {% csrf_token %}
+                {% for field in form %}
+                {% if field.name == "question" or field.name == "answer" %}
+                <label for="{{ field.name }}" class="text-capitalize ms-3">
+                    {{field.name}}
+                </label>
+                <div class="form-control bg-transparent border-0">
+                    <textarea class="form-control bg-transparent border-2 text-light fs-4"
+                        style="border-color: #696d97;" name="{{ field.name }}" id="{{ field.name }}"></textarea>
+                </div>
+                {% else %}
+                <label for="{{ field.name }}" class="text-capitalize ms-3">
+                    {{field.name}}
+                </label>
+                <div class="form-control bg-transparent border-0">
+                    <input type="text" class="form-control bg-transparent border-2 text-light fs-4"
+                        style="border-color: #696d97;" name="{{ field.name }}" id="{{ field.name }}">
+                </div>
+                {% endif %}
+                {% endfor %}
+                <div style="width: 100%;" id="hint-container">
+                    <!-- <div class="input-group form-control bg-transparent border-0 hint-element">
+                        <input type="" class="d-none" id="quizz_id" name="quizz_id">
+                        <span class="input-group-text bg-transparent border-2 text-light fs-4 my-3">Hint</span>
+                        <input type="text" placeholder="Hint" style="width: 350px;" aria-label="Hint"
+                            class="form-control bg-transparent border-2 text-light fs-4 my-3" name="hint">
+                        <input type="text" placeholder="Points" style="min-width: 70px;" aria-label="Point"
+                            class="form-control bg-transparent border-2 text-light fs-4 my-3" name="hint_point">
+                        <button onclick="delHint(event)" class="btn btn-outline-danger my-3 fs-4" type="button"
+                            id="hintDelBtn">Discard</button>
+                    </div> -->
+                </div>
+
+                <div class="text-end col-12 mt-2">
+                    <button onclick="addHint(event)" type="button" class="btn btn-sm btn-light mx-auto mb-2 me-3"
+                        style="background-color: #696d97!important;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-plus" viewBox="0 0 16 16">
+                            <path
+                                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z">
+                            </path>
+                        </svg>
+                        Add a hint
+                    </button>
+                </div>
+            </div>
+
+            <!-- Button Next -->
+            <!-- <div class="col-3 text-center d-flex justify-content-start d-none">
+                <button type="button" class="btn btn-lg my-auto btn-primary bg-transparent align-middle ms-5 fs-5"
+                    style="background-color: #696d97!important;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-caret-right" viewBox="0 0 16 16">
+                        <path
+                            d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z" />
+                    </svg>
+                    Next
+                </button>
+            </div> -->
+
+        </div>
+
+        <div class="container">
+            <!-- Button Cancel -->
+            <div class="text-center">
+                <button type="button" class="btn btn-lg btn-danger close mx-auto mt-5 me-2"
+                    aria-label="Close" style="background-color:#dc3545;">
+                    <span aria-hidden="true">&times;</span>
+                    Cancel
+                </button>
+
+                <!-- Button Add Question -->
+                <button type="button" class="btn btn-lg btn-light mx-auto mt-5"
+                    style="background-color: #696d97!important;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                        class="bi bi-plus" viewBox="0 0 16 16">
+                        <path
+                            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z">
+                        </path>
+                    </svg>
+                    Create & Continue
+                </button>
+            </div>
+        </div>
+
+
+        <!-- Button Submit -->
+        <div class="text-end col-11 mt-5">
+            <button type="submit" class="btn btn-lg btn-light me-5 my-auto"
+                style="background-color: #696d97!important;">
+                Submit
+            </button>
+        </div>
+    </form>
+
+
+
+    {% endblock content %}
+    {% include 'footer.html' %}
+    <script>
+        function addHint(event) {
+            const container = event.target.parentElement.parentElement.querySelector('#hint-container');
+
+            const newcard = document.createElement('DIV');
+            newcard.className = 'input-group form-control bg-transparent border-0 hint-element';
+            newcard.innerHTML = '<input type="" class="d-none" id="quizz_id" name="quizz_id"><span class="input-group-text bg-transparent border-2 text-light fs-4 my-3">Hint</span> <input type="text" placeholder="Hint" style="width: 350px;" aria-label="Hint" class="form-control bg-transparent border-2 text-light fs-4 my-3" name="hint"> <input type="text" placeholder="Points" style="min-width: 70px;" aria-label="Point" class="form-control bg-transparent border-2 text-light fs-4 my-3" name="hint_point"> <button onclick="delHint(event)" class="btn btn-outline-danger my-3 fs-4" type="button" id="hintDelBtn">Discard</button>'
+
+            container.appendChild(newcard);
+        }
+
+        function delHint(event) {
+            event.target.parentElement.remove();
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

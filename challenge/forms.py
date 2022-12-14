@@ -9,6 +9,7 @@ class ChallengeForm(ModelForm):
     class Meta:
         model = Challenge
         fields = '__all__'
+        exclude = ['owner']
         widgets = {
             'date_start' : DateTimeInput(),
             'date_end' : DateTimeInput()
@@ -18,3 +19,4 @@ class QuizzForm(ModelForm):
     class Meta:
         model = Quizz
         fields = '__all__'
+        exclude=['challenge_id']
