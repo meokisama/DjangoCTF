@@ -14,6 +14,7 @@
 
 <body>
   {% include 'navbar.html' %}
+  {% load main_extras %}
   {% block content %}
 
   <!-- Start of Events -->
@@ -50,11 +51,11 @@
         </div>
         {% endfor %}
 
-        <div class="pagination">
+        <div class="pagination_">
           <span class="step-links">
               {% if page_obj.has_previous %}
-                  <a href="?page=1">&laquo; first</a>
-                  <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                  <a href="{{ request.get_full_path|add_or_replace_q:'page' }}page=1">&laquo; first</a>
+                  <a href="{{ request.get_full_path|add_or_replace_q:'page' }}page={{ page_obj.previous_page_number }}">previous</a>
               {% endif %}
       
               <span class="current">
@@ -62,11 +63,8 @@
               </span>
       
               {% if page_obj.has_next %}
-                <!-- {% if 'page' in request.get_full_path %}
-                {{ request.get_full_path|cut:'' }} -->
-                  <a href="?page={{ page_obj.next_page_number }}">next</a>
-                  <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-                <!-- {% endif %} -->
+                <a href="{{ request.get_full_path|add_or_replace_q:'page' }}page={{ page_obj.next_page_number }}">next</a>
+                <a href="{{ request.get_full_path|add_or_replace_q:'page' }}page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
               {% endif %}
           </span>
         </div>
