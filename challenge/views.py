@@ -107,8 +107,43 @@ def display_quizzes(request, pk):
         hint_count=Hint.objects.all().filter(quizz_id=id).count()
         hint_counts.append(hint_count)
 
-    print(quizzes)
-
     context={'challenge':challenge,'quizzes':quizzes,'hintCounts':hint_counts}
 
     return render(request, 'display_quizzes.html',context)
+
+@login_required(login_url='login')
+def edit_quizz(request,pk,pk1):
+    quizz=Quizz.objects.get(id=pk1)
+
+    form = QuizzForm()
+    
+    hints=Hint.objects.filter(quizz_id=pk1).values('content','point')
+
+    if request.method == 'POST':
+        form=QuizzForm(request.POST,request.FILES,instance=quizz)
+        # print(form)
+        if form.is_valid():
+            Hint.objects.filter(quizz_id=pk1).delete()
+            hints = request.POST.getlist('hint')
+            hint_points = request.POST.getlist('hint_point')
+            print(hints)
+
+            for content, hint_point in zip(hints,hint_points):
+                hint = Hint.objects.create(
+                    quizz_id=pk1,
+                    content=content,
+                    point=hint_point
+                )
+                hint.save()
+
+            form.save()
+            return redirect(display_quizzes,pk=pk)
+        
+        # form=QuizzForm(request.POST)
+        # hintss = request.POST.getlist('hint')
+        # hint_points = request.POST.getlist('hint_point')
+        # print(hintss)
+        
+    
+    context={'form':form,'quizz':quizz,'challenge_id':pk,'hints':hints}
+    return render(request, 'edit_a_quizz.html',context)
