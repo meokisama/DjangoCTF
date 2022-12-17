@@ -3,16 +3,25 @@ from django.contrib.auth.decorators import login_required
 
 from django.core.files.storage import FileSystemStorage
 
-from .forms import ChallengeForm, QuizzForm
-from .forms import Challenge, Quizz, Hint
+from .forms import ChallengeForm, QuizzForm, AnswerForm
+from .forms import Challenge, Quizz, Hint, Answer
+
+from community.models import User
 
 # Create your views here.
 
 
 def viewChallenge(request):
-    challenges=Challenge.objects.all().filter(owner=request.user)
+    challenges={}
+    if request.user.is_superuser:
+        challenges=Challenge.objects.all().filter(owner=request.user)
+        is_super='yes'
+    else:
+        is_super='no'
 
-    context={'challenges':challenges}
+    print(is_super)
+
+    context={'challenges':challenges,'is_super':is_super}
     return render(request, 'challenge.html',context)
 
 
@@ -37,7 +46,8 @@ def create_challenge(request):
             )
             challenge.save()
             # print(form)
-            return redirect(f'create_challenge_quizz/{challenge.id}')
+            return redirect(create_challenge_quizz,pk=challenge.id)
+            # return redirect(f'create_challenge_quizz/{challenge.id}/')
 
     context = {'form': form}
     return render(request, 'create_challenge.html', context)
@@ -63,6 +73,8 @@ def create_challenge_quizz(request, pk):
             files = request.FILES.getlist('file_content')
             dict_id =  {}
             count=1
+            # print(names)
+            # print(files)
             for name, question, answer, point, file in zip(names, questions, answers, points, files):
                 quizz = Quizz.objects.create(
                     challenge_id=pk,
@@ -126,7 +138,7 @@ def edit_quizz(request,pk,pk1):
             Hint.objects.filter(quizz_id=pk1).delete()
             hints = request.POST.getlist('hint')
             hint_points = request.POST.getlist('hint_point')
-            print(hints)
+            # print(hints)
 
             for content, hint_point in zip(hints,hint_points):
                 hint = Hint.objects.create(
@@ -147,3 +159,76 @@ def edit_quizz(request,pk,pk1):
     
     context={'form':form,'quizz':quizz,'challenge_id':pk,'hints':hints}
     return render(request, 'edit_a_quizz.html',context)
+
+
+
+def join_challenge(request, pk):
+    challenge = Challenge.objects.get(id=pk)
+
+    creator = User.objects.get(username=challenge.owner)
+    creator_name=creator.name
+
+    # print(creator_name)
+    context={'challenge':challenge,'creator_name':creator_name}
+    return render(request, 'join_challenge.html',context)
+
+def play_challenge(request, pk):
+    challenge = Challenge.objects.get(id=pk)
+    quizzes=Quizz.objects.all().filter(challenge_id=pk).values('id','name','question','answer','point','file_content')
+
+    quizz_status={}
+
+    score=0
+
+    for quizz in quizzes:
+        try:
+            obj = Answer.objects.get(quizz_id=quizz['id'])
+            quizz_status[quizz['id']]='yes'
+            score+=obj.point
+        except Answer.DoesNotExist:
+            quizz_status[quizz['id']]='no'
+            pass
+    
+    print(quizz_status)
+
+    context={'challenge':challenge,'quizzes':quizzes,'quizz_status':quizz_status,'score':score}
+    return render(request, 'play_challenge.html',context)
+
+def play_challenge_quizz(request, pk, pk1):
+    challenge = Challenge.objects.get(id=pk)
+    quizz = Quizz.objects.get(id=pk1)
+    hints = Hint.objects.filter(quizz_id=quizz.id)
+
+    _point=0
+
+    if request.method == 'POST':
+            _answer = request.POST.get('answer')
+            minus_point=request.POST.get('minus-point')
+            # print('begin')
+            # print(minus_point)
+            if _answer==quizz.answer:
+                _point=quizz.point-int(minus_point)
+            else:
+                _point=0
+
+            try:
+                obj = Answer.objects.get(quizz_id=quizz.id)
+                _point=int(75*int(_point)/100)
+                obj.point=_point
+                obj.save()
+            except Answer.DoesNotExist:
+                answer_obj=Answer.objects.create(
+                    challenge_id=challenge.id,
+                    username=request.user.username,
+                    quizz_id=quizz.id,
+                    answer=_answer,
+                    point=_point
+                )
+                answer_obj.save()
+
+            return redirect(play_challenge,pk=pk)
+
+    # print(hints)
+
+    context={'challenge':challenge,'quizz':quizz,'hints':hints}
+    return render(request, 'play_challenge_quizz.html',context)

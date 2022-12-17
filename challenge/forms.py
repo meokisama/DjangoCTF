@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Challenge, Quizz, Hint
+from .models import Challenge, Quizz, Hint, Answer
 
 class DateTimeInput(forms.DateTimeInput):
     input_type = 'datetime-local'
@@ -20,3 +20,8 @@ class QuizzForm(ModelForm):
         model = Quizz
         fields = '__all__'
         exclude=['challenge_id']
+
+class AnswerForm(ModelForm):
+    class Meta:
+        model = Answer
+        fields = ['answer']
