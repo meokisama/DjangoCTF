@@ -129,9 +129,6 @@ class ChallengeListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        #print(context['object_list'])
-        #context['object_list'] = context.keys()
-        #context['object_list'] = Challenge.objects.filter(name__contains = (self.request.GET.get('q') or ''))
         return context
 
     def get_queryset(self):
