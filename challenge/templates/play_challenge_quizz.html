@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CTFGames - Cybersecurity Competition</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main/challenge.css' %}?{% now " U" %}">
+    <link rel="shortcut icon" type="image/png" href="{% static 'main/logo-black.png' %}" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+    {% include 'navbar.html' %}
+    {% block content %}
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="container text-center mb-4">
+            <div class="card w-50 mx-auto text-center">
+                <div class="card-title border-bottom">{{quizz.name}}</div>
+                <div class="card-body text-start">
+                    <div class="ms-3">
+                        Question: {{quizz.question}} <br>
+                    </div>
+                    <div class="ms-3">
+                        Points: {{quizz.point}} <br>
+                    </div>
+                    <div class="ms-3">
+                        {% for hint in hints %}
+                        <div>
+                            Hint {{forloop.counter}}:
+                            <span style="color: #71c6dd;" class="clickable-element" onclick="event.target.innerHTML='{{hint.content}}'; num+=parseInt('{{hint.point}}');
+                                getPoint();">Click
+                                to show hint</span>
+                            (-{{hint.point}} pts)<br>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% if quizz.file_content %}
+                    <div class="ms-3">
+                        File:
+                        <a href="{{quizz.file_content.url}}" class="btn btn-lg btn-primary px-3 py-2"
+                            style="background-color: #696d97!important;">
+                            Download file
+                        </a>
+                    </div>
+                    {% endif %}
+
+                    <label for="answer" class="text-capitalize ms-3">
+                        answer:
+                    </label>
+                    <div class="form-control bg-transparent border-0">
+                        <textarea class="form-control bg-transparent border-2 text-light fs-4"
+                            style="border-color: #696d97;" name="answer" id="id_answer" required></textarea>
+                    </div>
+
+                    <input type="text" class="d-none" id="minus-point" name="minus-point" value=0>
+                </div>
+            </div>
+        </div>
+
+        <div class="container row mt-0">
+            <!-- Button Cancel -->
+            <div class="text-end col-8">
+                <button type="button" onclick="location.href='{% url 'play_challenge' challenge.id %}'"
+                    class="btn btn-lg btn-danger me-1 my-auto" style="background-color: #c93232!important;">
+                    Cancel
+                </button>
+            </div>
+            <!-- Button Submit -->
+            <div class="text-end col-1">
+                <button type="submit" class="btn btn-lg btn-light my-auto" style="background-color: #696d97!important;">
+                    Submit
+                </button>
+            </div>
+        </div>
+    </form>
+
+
+    {% endblock content %}
+    {% include 'footer.html' %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        var num = 0;
+        function showHint(event) {
+            container = event.target;
+            container.innerHTML = '{{hint.content}}';
+        }
+
+        function getPoint() {
+            event.target.onclick = false;
+            document.getElementById('minus-point').value = num;
+            console.log(num)
+        }
+    </script>
+</body>
+
+</html>

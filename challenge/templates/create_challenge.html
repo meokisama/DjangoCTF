@@ -15,7 +15,7 @@
 <body>
     {% include 'navbar.html' %}
     {% block content %}
-    <div class="card col-sm-5 mx-auto pt-0 rounded-4" style="background-color: #3f4156!important;">
+    <div class="card col-sm-5 mx-auto pt-0 rounded-4 my-5" style="background-color: #3f4156!important;">
         <h2 class="card-header pt-4 text-center" style="background-color: #696d97!important;">Create a challenge</h2>
         <div class="card-body">
             <form action="" method="POST">
@@ -37,13 +37,13 @@
                 </label>
                 {% if field.name == "description" %}
                 <div class="form-control bg-transparent border-0">
-                    <textarea type="text" class="form-control bg-transparent border-2 text-light fs-4" rows="4"
+                    <textarea type="date" class="form-control bg-transparent border-2 text-light fs-4" rows="4"
                         style="border-color: #696d97;" name="{{ field.name }}" id="{{ field.name }}"></textarea>
                 </div>
                 {% elif field.name == "date_start" or field.name == "date_end" %}
                 <div class="form-control bg-transparent border-0">
-                    <input type="date" class="form-control bg-transparent border-2 text-light fs-4"
-                        style="border-color: #696d97;" name="{{ field.name }}" id="{{ field.name }}">
+                    <input type="datetime-local" class="form-control bg-transparent border-2 text-light fs-4"
+                        style="border-color: #696d97;" name="{{ field.name }}" required id="id_{{ field.name }}">
                 </div>
                 {% else %}
                 <div class="form-control bg-transparent border-0">
@@ -55,7 +55,6 @@
                 <div class="container text-end mx-0 w-100">
                     <button type="submit" class="btn btn-primary" style="background-color: #6D83F2;">Submit</button>
                 </div>
-
             </form>
         </div>
     </div>

@@ -26,8 +26,8 @@
     <div class="container p-4">
       <div class="row text-center">
 
-        {% for challenge in object_list %}
-        <div class="col-lg-4 my-2">
+        {% for challenge in challenges %}
+        <div class="col-lg-4 my-2" onclick="location.href='{% url 'join_challenge' challenge.id %}'">
           <div class="card">
             <div class="ThumbnailWrapper">
               <div class="InnerWrapper">

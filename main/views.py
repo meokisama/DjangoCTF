@@ -11,15 +11,22 @@ from json import dumps
 from django.views.generic import ListView
 from challenge.models import Challenge
 
+from datetime import date, datetime
+from django.utils import timezone
+import pandas as pd
+
 User = get_user_model()
 from community.models import Note
 
 # Create your views here.
 
 def home(request):
+    now = timezone.now()
+    date = now.strftime("%Y-%m-%d %H:%M:%S")
     # challenges = Challenge.objects.all()
-    # context = {'challenges':challenges}
-    return render(request, 'index.html')
+    challenges = Challenge.objects.all().filter(date_end__gte=date)
+    context = {'challenges':challenges}
+    return render(request, 'index.html',context)
 
 # def challenge(request):
 #     challenge = Challenge.objects.get(id=pk)
@@ -130,11 +137,17 @@ class ChallengeListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         #print(context['object_list'])
+#         #context['object_list'] = context.keys()
+#         #context['object_list'] = Challenge.objects.filter(name__contains = (self.request.GET.get('q') or ''))
+#         return context
 
-    def get_queryset(self):
-        queryset = Challenge.objects.filter(name__contains = (self.request.GET.get('q') or ''))
-        queryset.order_by('day_created')
-        return queryset
+#     def get_queryset(self):
+#         queryset = Challenge.objects.filter(name__contains = (self.request.GET.get('q') or ''))
+#         queryset.order_by('date_created')
+#         return queryset
 
 
 

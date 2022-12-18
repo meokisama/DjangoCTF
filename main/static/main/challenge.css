@@ -355,3 +355,13 @@
   font-family: "Montserrat", sans-serif;
   font-weight: bold;
 }
+
+#challenge-card:hover
+{
+  cursor: pointer;
+}
+
+.clickable-element:hover
+{
+  cursor: pointer;
+}
