@@ -639,6 +639,14 @@
   height: 12%;
 }
 
+.note-header span {
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  font-family: "Poppins", sans-serif;
+  font-weight: 800 !important;
+  margin: 0 1%;
+}
+
 .note-body {
   background-color: #3f4156;
   color: #b2bdbd !important;
@@ -653,6 +661,12 @@
   height: 88%;
 }
 
+.date-container {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  /* display: flex; */
+}
+
 .note-date {
   display: grid;
   border: 2px solid transparent;
@@ -662,9 +676,23 @@
   font-family: "Poppins", sans-serif;
   color: #8f8f8f;
   font-size: 2rem;
+  position: relative;
 }
 
 .note-date:hover {
+  color: #71c6dd;
+}
+
+.note-today {
+  font-size: 15px;
+  text-decoration: underline;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  color: #8f8f8f;
+}
+
+.note-today:hover {
   color: #71c6dd;
 }
 

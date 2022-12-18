@@ -54,10 +54,14 @@
             </div>
             <div class="note">
                 <div class="note-header">
-                    <span class="month-picker">NOTE</span>
+                    <span>NOTE</span>
                 </div>
                 <div class="note-body">
-                    <div class="note-date"></div>
+                    <div class="date-container">
+                        <div class="note-today" style="color:#3f4156">To today</div>
+                        <div class="note-date"></div>
+                        <div class="note-today" id="note_today">To today</div>
+                    </div>
                     <div class="note-content">
                         <form method="POST">
                             {% csrf_token %}
@@ -154,6 +158,10 @@
             }
 
             last_chosen_day = -1
+        }
+
+        onclickDay = (day) => {
+
         }
 
         let data = ''
@@ -275,6 +283,16 @@
 
             year_list.classList.remove('show')
             month_list.classList.remove('show')
+        }
+
+        document.getElementById('note_today').onclick = () => {
+            if (curr_year != today.getFullYear() || curr_month != today.getMonth()) {
+                curr_month = today.getMonth()
+                curr_year = today.getFullYear()
+                generateCalendar(curr_month, curr_year)
+            }
+
+            calendar.querySelector('.c' + today.getDate()).click()
         }
 
         note_date.addEventListener('wheel', function (e) {
