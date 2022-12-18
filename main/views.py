@@ -13,7 +13,7 @@ from challenge.models import Challenge
 
 from datetime import date, datetime
 from django.utils import timezone
-import pandas as pd
+# import pandas as pd
 
 User = get_user_model()
 from community.models import Note
@@ -43,19 +43,26 @@ def calendar(request):
             [d,m,y]= str(request.POST.get('note_date')).split('/')
             user = User.objects.get(pk=request.user.id)
             date = y + "-" + m + "-"+ d
-            content = request.POST.get('note_content')
-            if content != '':
-                try:
-                    note = Note.objects.filter(user=user).get(date=date)
-                    note.content = request.POST.get('note_content')
-                except:
-                    note = Note.objects.create(user=user,date=date,content=content)
-                note.save()
-            else:
+
+            if 'note_delete' in request.POST:
                 try:
                     Note.objects.filter(user=user).get(date=date).delete()
                 except:
-                    messages.info(request, "Note content can't be empty")
+                    messages.info(request, "There's not note saved")
+            else:
+                content = request.POST.get('note_content')
+                if content != '':
+                    try:
+                        note = Note.objects.filter(user=user).get(date=date)
+                        note.content = request.POST.get('note_content')
+                    except:
+                        note = Note.objects.create(user=user,date=date,content=content)
+                    note.save()
+                else:
+                    try:
+                        Note.objects.filter(user=user).get(date=date).delete()
+                    except:
+                        messages.info(request, "Note content can't be empty")
 
             return redirect('calendar')
 
@@ -134,20 +141,17 @@ class ChallengeListView(ListView):
     ordering = 'day_created'
     paginate_by = 3
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         #print(context['object_list'])
-#         #context['object_list'] = context.keys()
-#         #context['object_list'] = Challenge.objects.filter(name__contains = (self.request.GET.get('q') or ''))
-#         return context
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     return context
 
-#     def get_queryset(self):
-#         queryset = Challenge.objects.filter(name__contains = (self.request.GET.get('q') or ''))
-#         queryset.order_by('date_created')
-#         return queryset
+    def get_queryset(self):
+        now = timezone.now()
+        date = now.strftime("%Y-%m-%d %H:%M:%S")
+        
+        queryset = Challenge.objects.filter(date_end__gte=date, name__contains = (self.request.GET.get('q') or ''))
+        queryset.order_by('date_created')
+        return queryset
 
 
 
