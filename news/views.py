@@ -7,6 +7,7 @@ import feedparser
 def news(request):
     feed = feedparser.parse("https://feeds.feedburner.com/TheHackersNews")
     entries = feed.entries
+    print(entries)
     # https://simpleisbetterthancomplex.com/tutorial/2016/08/03/how-to-paginate-with-django.html
     paginator = Paginator(entries, 8)
     page = request.GET.get('page', 1)
