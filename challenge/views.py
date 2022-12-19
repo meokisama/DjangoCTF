@@ -6,7 +6,7 @@ from django.core.files.storage import FileSystemStorage
 from .forms import ChallengeForm, QuizzForm, AnswerForm
 from .forms import Challenge, Quizz, Hint, Answer
 
-from community.models import User
+from community.models import User, Note
 
 # Create your views here.
 
@@ -168,9 +168,44 @@ def join_challenge(request, pk):
     creator = User.objects.get(username=challenge.owner)
     creator_name=creator.name
 
-    # print(creator_name)
     context={'challenge':challenge,'creator_name':creator_name}
     return render(request, 'join_challenge.html',context)
+
+def register_challenge(request, pk):
+    challenge = Challenge.objects.get(id=pk)
+
+    creator = User.objects.get(username=challenge.owner)
+    creator_name=creator.name
+
+    try:
+        obj=Note.objects.get(challenge_id=challenge.id)
+        registered='yes'
+    except Note.DoesNotExist:
+        registered='no'
+
+    if request.method == 'POST':
+        _content=challenge.name+" has started. Join us now!"
+        note = Note.objects.create(
+            user=request.user,
+            date=challenge.date_start,
+            content=_content,
+            challenge_id=challenge.id
+        )
+        note.save()
+        return redirect('upcoming')
+
+    # print(creator_name)
+    context={'challenge':challenge,'creator_name':creator_name,'registered':registered}
+    return render(request, 'register_challenge.html',context)
+
+def expired_challenge(request, pk):
+    challenge = Challenge.objects.get(id=pk)
+
+    creator = User.objects.get(username=challenge.owner)
+    creator_name=creator.name
+
+    context={'challenge':challenge,'creator_name':creator_name}
+    return render(request, 'expired_challenge.html',context)
 
 def play_challenge(request, pk):
     challenge = Challenge.objects.get(id=pk)

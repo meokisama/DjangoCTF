@@ -55,6 +55,7 @@ class Note(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateField(editable=True)
     content = models.TextField()
+    challenge_id=models.IntegerField(null=True,blank=True)
 
     class Meta:
         ordering = ['-date']

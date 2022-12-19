@@ -36,20 +36,10 @@
         </div>
     </div>
 
-    <!-- Button Join -->
-    <div class="container row">
-        <div class="text-end col-4" onclick="location.href='{% url 'running' %}'">
-            <button type="button" class="btn btn-lg btn-light my-auto" style="background-color: rgb(186, 2, 2)!important;">
-                Back
-            </button>
-        </div>
-        <div class="text-start col-2" onclick="location.href='{% url 'play_challenge' challenge.id %}'">
-            <button type="button" class="btn btn-lg btn-light my-auto" style="background-color: #696d97!important;">
-                Join
-            </button>
-        </div>
+    <div class="container text-center">
+        <div class="h2">You can't do anything with expired challenge! <br></div>
+        <a href="{% url 'expired' %}">Click here to come back.</a>
     </div>
-    
 
 
     {% endblock content %}
