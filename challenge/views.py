@@ -36,13 +36,15 @@ def create_challenge(request):
             date_start = request.POST.get('date_start')
             date_end = request.POST.get('date_end')
             description = request.POST.get('description')
+            public=request.POST.get('public')
 
             challenge = Challenge.objects.create(
                 name=name,
                 owner=str(request.user),
                 date_start=date_start,
                 date_end=date_end,
-                description=description
+                description=description,
+                public=public
             )
             challenge.save()
             # print(form)

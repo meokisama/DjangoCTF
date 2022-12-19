@@ -21,6 +21,8 @@
             <form action="" method="POST">
                 {% csrf_token %}
                 {% for field in form %}
+                {% if field.name == "public" %}
+                {% else %}
                 <label for="{{ field.name }}" class="text-capitalize ms-3">
                     {% if field.name == "name" %}
                     Name
@@ -35,20 +37,29 @@
                     Description
                     {% endif %}
                 </label>
+                {% endif %}
                 {% if field.name == "description" %}
                 <div class="form-control bg-transparent border-0">
                     <textarea type="date" class="form-control bg-transparent border-2 text-light fs-4" rows="4"
-                        style="border-color: #696d97;" name="{{ field.name }}" id="{{ field.name }}"></textarea>
+                        style="border-color: #696d97;" name="{{ field.name }}" id="id_{{ field.name }}"></textarea>
                 </div>
                 {% elif field.name == "date_start" or field.name == "date_end" %}
                 <div class="form-control bg-transparent border-0">
                     <input type="datetime-local" class="form-control bg-transparent border-2 text-light fs-4"
                         style="border-color: #696d97;" name="{{ field.name }}" required id="id_{{ field.name }}">
                 </div>
+                {% elif field.name == "public" %}
+                <div class="form-check bg-transparent border-0 ms-3"  onclick="getChecked()">
+                    <label class="form-check-label" for="id_{{ field.name }}">
+                        Public
+                    </label>
+                    <input class="form-check-input"  type="checkbox" value="False" name="{{ field.name }}" id="id_{{ field.name }}">
+                    
+                </div>
                 {% else %}
                 <div class="form-control bg-transparent border-0">
                     <input type="text" class="form-control bg-transparent border-2 text-light fs-4"
-                        style="border-color: #696d97;" name="{{ field.name }}" id="{{ field.name }}">
+                        style="border-color: #696d97;" name="{{ field.name }}" id="id_{{ field.name }}">
                 </div>
                 {% endif %}
                 {% endfor %}
@@ -64,6 +75,20 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
+
+    <script>
+        function getChecked()
+        {
+            checkbox=document.getElementById('id_public')
+            if (checkbox.checked)
+            {
+                checkbox.value="True"
+            }
+            else{
+                checkbox.value="False"
+            }
+        }
+    </script>
 </body>
 
 </html>
