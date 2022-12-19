@@ -12,86 +12,174 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 
 <body>
     {% include 'navbar.html' %}
     {% block content %}
     {% load filename %}
-    <div class="container mb-4">
-        <div class="row">
-            <div class="card col-sm mx-auto pt-0 rounded-4 ms-3" style="background-color: #3f4156!important;">
-                {% csrf_token %}
-                <div class="card-body d-inline">
-                    Name: {{challenge.name}} <br>Start from: {{challenge.date_start}} <br>To: {{challenge.date_end}}
-                </div>
-
-            </div>
-            {% load static %}
-            <div class="col col-lg-4 text-end">
-                <img class="img-fluid text-end d-inline" style="height: 250px; width: 378px;"
-                    src="{% static 'main/images/thumb.png' %}">
-            </div>
-        </div>
-    </div>
-
-    <div class="container row">
-
-        {% csrf_token %}
-        {% for quizz in quizzes %}
-        <div class="px-1 col-sm-4 my-2 clickable-element" onclick='location.href="edit_quizz/{{quizz.id}}/"'>
-            <div class="card-body p-3 rounded-4 px-2"
-                style="background-color: #3f4156!important;border-bottom: 4px solid #6d83f2!important;">
-                {% for key,value in quizz.items %}
-                {% if key == 'file_content' %}
-                <div class="ms-3">
-                    <label for="{{ key }}" class="text-capitalize fs-4">
-                        File:
-                    </label>
-                    <div class="bg-transparent border-0 d-inline fs-4">
-                        <p class="text-light d-inline">{{quizz.file_content}}</p>
+    <form action="" method="post">
+        <div class="container mb-4">
+            <div class="row">
+                <div class="card col-sm mx-auto pt-0 rounded-4 ms-3" style="background-color: #3f4156!important;">
+                    {% csrf_token %}
+                    <div class="card-body d-inline">
+                        Name: {{challenge.name}} <br>Start from: {{challenge.date_start}} <br>
+                        To: {{challenge.date_end}} <br>
+                        {{challenge.public}}
+                        <div class="container h-75 text-end">
+                            {% if challenge.public %}
+                            <button type="submit" name="changePrivate"
+                                class="btn btn-sm position-absolute bottom-0 end-0 m-4"
+                                style="background-color: rgb(0, 164, 164);">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-toggles2" viewBox="0 0 16 16">
+                                    <path
+                                        d="M9.465 10H12a2 2 0 1 1 0 4H9.465c.34-.588.535-1.271.535-2 0-.729-.195-1.412-.535-2z" />
+                                    <path
+                                        d="M6 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 1a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm.535-10a3.975 3.975 0 0 1-.409-1H4a1 1 0 0 1 0-2h2.126c.091-.355.23-.69.41-1H4a2 2 0 1 0 0 4h2.535z" />
+                                    <path d="M14 4a4 4 0 1 1-8 0 4 4 0 0 1 8 0z" />
+                                </svg>Change to Private
+                            </button>
+                            {% else %}
+                            <button type="submit" name="changePublic"
+                                class="btn btn-sm position-absolute bottom-0 end-0 m-4"
+                                style="background-color: rgb(0, 164, 164);">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-toggles2" viewBox="0 0 16 16">
+                                    <path
+                                        d="M9.465 10H12a2 2 0 1 1 0 4H9.465c.34-.588.535-1.271.535-2 0-.729-.195-1.412-.535-2z" />
+                                    <path
+                                        d="M6 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 1a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm.535-10a3.975 3.975 0 0 1-.409-1H4a1 1 0 0 1 0-2h2.126c.091-.355.23-.69.41-1H4a2 2 0 1 0 0 4h2.535z" />
+                                    <path d="M14 4a4 4 0 1 1-8 0 4 4 0 0 1 8 0z" />
+                                </svg>Change to Public
+                            </button>
+                            {% endif %}
+                        </div>
                     </div>
+
                 </div>
-                {% else %}
-                <div class="ms-3">
-                    <label for="{{ key }}" class="text-capitalize fs-4">
-                        {{key}}:
-                    </label>
-                    <div class="bg-transparent border-0 d-inline fs-4">
-                        <p class="text-light d-inline">{{value}}</p>
-                    </div>
-                </div>
-                {% endif %}
-                {% endfor %}
-                <div class="ms-3">
-                    <label for="{{ key }}" class="text-capitalize fs-4">
-                        Hints:
-                    </label>
-                    <div class="bg-transparent border-0 d-inline fs-4">
-                        <p class="text-light d-inline">{{hintCounts|index:forloop.counter0}}</p>
-                    </div>
+                {% load static %}
+                <div class="col col-lg-4 text-end">
+                    <img class="img-fluid text-end d-inline" style="height: 250px; width: 378px;"
+                        src="{% static 'main/images/thumb.png' %}">
                 </div>
             </div>
         </div>
-        {{listCount}}
-        {% endfor %}
-        <!-- Add quizz element -->
-        <div class="px-1 col-sm-4 my-2 clickable-element" onclick='location.href="{% url 'create_challenge_quizz' challenge.id %}"'>
-            <div class="card-body p-3 rounded-4 px-2"
-            style="background-color: #3f4156!important;border-bottom: 4px solid #6d83f2!important;">
-                <div class="card-img-top my-4">
-                    <img class="" width="78px" height="78px" src="{% static 'main/images/plus-symbol1.svg' %}">
-                </div>
-                <div class="card-body mt-2 text-center">
-                    <h5 class="card-title">Create a new quiz</h5>
+
+        <div class="container row">
+
+            {% csrf_token %}
+            {% for quizz in quizzes %}
+            <div class="px-1 col-sm-4 my-2 clickable-element" onclick='location.href="edit_quizz/{{quizz.id}}/"'>
+                <div class="card-body p-3 rounded-4 px-2"
+                    style="background-color: #3f4156!important;border-bottom: 4px solid #6d83f2!important;">
+                    {% for key,value in quizz.items %}
+                    {% if key == 'file_content' %}
+                    <div class="ms-3">
+                        <label for="{{ key }}" class="text-capitalize fs-4">
+                            File:
+                        </label>
+                        <div class="bg-transparent border-0 d-inline fs-4">
+                            <p class="text-light d-inline">{{quizz.file_content}}</p>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="ms-3">
+                        <label for="{{ key }}" class="text-capitalize fs-4">
+                            {{key}}:
+                        </label>
+                        <div class="bg-transparent border-0 d-inline fs-4">
+                            <p class="text-light d-inline">{{value}}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    <div class="ms-3">
+                        <label for="{{ key }}" class="text-capitalize fs-4">
+                            Hints:
+                        </label>
+                        <div class="bg-transparent border-0 d-inline fs-4">
+                            <p class="text-light d-inline">{{hintCounts|index:forloop.counter0}}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        {% endblock content %}
-        {% include 'footer.html' %}
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-            crossorigin="anonymous"></script>
+            {{listCount}}
+            {% endfor %}
+            <!-- Add quizz element -->
+            <div class="px-1 col-sm-4 my-2 clickable-element"
+                onclick="location.href='{% url 'create_challenge_quizz' challenge.id %}'">
+                <div class="card-body p-3 rounded-4 px-2"
+                    style="background-color: #3f4156!important;border-bottom: 4px solid #6d83f2!important;">
+                    <div class="card-img-top my-5">
+                        <img class="" width="78px" height="78px" src="{% static 'main/images/plus-symbol1.svg' %}">
+                    </div>
+                    <div class="card-body mt-2 text-center">
+                        <h5 class="card-title">Create a new quiz</h5>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Delete Challenge -->
+            <form action="" method="POST">
+                <div class="container text-end mb-3 w-100">
+                    <button type="button" class="btn btn-primary" onclick="location.href='{% url 'challenge' %}'"
+                        style="background-color: #696d97;">Back</button>
+                    <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary"
+                        style="background-color: rgb(162, 1, 1);">Delete</button>
+                </div>
+            </form>
+
+            <!-- Modal -->
+            <div id="myModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content text-light" style="background-color:#212529">
+                        <div class="modal-header row border-0">
+                            <h4 class="modal-title col-5">Confirmation</h4>
+                            <button type="button" class="close col-5 text-end" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body border-0">
+                            <p style="color: red;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                    class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16"
+                                    role="img" aria-label="Warning:">
+                                    <path
+                                        d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                                </svg>
+                                WARNING <br>
+                                You're going to delete this challenge. This action is irreversible!
+                            </p>
+                        </div>
+                        <div class="modal-footer border-0">
+                            {% csrf_token %}
+                            <button type="button" class="btn text-light bg-transparent"
+                                data-dismiss="modal">Cancel</button>
+                            <button type="submit" name="Delete" onclick="redirecting()" class="btn text-light"
+                                style="background-color: #696d97;">OK & Continue</button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+    </form>
+
+    {% endblock content %}
+    {% include 'footer.html' %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        function redirecting() {
+            location.href = '{% url 'challenge' %}';
+        }
+    </script>
 </body>
 
 </html>

@@ -149,7 +149,7 @@ class ChallengeListView(ListView):
         now = timezone.now()
         date = now.strftime("%Y-%m-%d %H:%M:%S")
         
-        queryset = Challenge.objects.filter(date_end__gte=date,date_start__lte=date)
+        queryset = Challenge.objects.filter(date_end__gte=date,date_start__lte=date,public=True)
         queryset.order_by('date_created')
         return queryset
 
@@ -169,7 +169,7 @@ class ChallengeListViewUpcoming(ListView):
         now = timezone.now()
         date = now.strftime("%Y-%m-%d %H:%M:%S")
         
-        queryset = Challenge.objects.filter(date_start__gte=date, name__contains = (self.request.GET.get('q') or ''))
+        queryset = Challenge.objects.filter(date_start__gte=date,public=True)
         queryset.order_by('date_created')
         return queryset
 
@@ -188,7 +188,7 @@ class ChallengeListViewExpired(ListView):
         now = timezone.now()
         date = now.strftime("%Y-%m-%d %H:%M:%S")
         
-        queryset = Challenge.objects.filter(date_end__lte=date, name__contains = (self.request.GET.get('q') or ''))
+        queryset = Challenge.objects.filter(date_end__lte=date,public=True)
         queryset.order_by('date_created')
         return queryset
 
@@ -207,6 +207,6 @@ class ChallengeListViewSearching(ListView):
         now = timezone.now()
         date = now.strftime("%Y-%m-%d %H:%M:%S")
         
-        queryset = Challenge.objects.filter(name__contains = (self.request.GET.get('q') or ''))
+        queryset = Challenge.objects.filter(name__contains = (self.request.GET.get('q') or ''),public=True)
         queryset.order_by('date_created')
         return queryset

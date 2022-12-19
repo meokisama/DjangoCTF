@@ -36,7 +36,7 @@
                 </label>
                 <div class="form-control bg-transparent border-0">
                     <textarea class="form-control bg-transparent border-2 text-light fs-4"
-                        style="border-color: #696d97;" name="{{field.name}}" id="{{ field.name }}"></textarea>
+                        style="border-color: #696d97;" name="{{field.name}}" id="{{ field.name }}" required></textarea>
                 </div>
                 {% elif field.name == "file_content" %}
                 <div class="row ms-3">
@@ -49,6 +49,7 @@
                     </div>
                     <!-- <div class="ms-3 col-3" id="uploadElement">
                         <input type="file" name="file_content" id="id_file_content">
+                        <input type="" name="id_file" value="">
                     </div> -->
                 </div>
                 {% else %}
@@ -57,7 +58,7 @@
                 </label>
                 <div class="form-control bg-transparent border-0">
                     <input type="text" class="form-control bg-transparent border-2 text-light fs-4"
-                        style="border-color: #696d97;" name="{{field.name}}" id="{{ field.name }}">
+                        style="border-color: #696d97;" name="{{field.name}}" id="{{ field.name }}" required>
                 </div>
                 {% endif %}
                 {% endfor %}
@@ -89,11 +90,10 @@
                     </button>
                 </div>
             </div>
-
         </div>
 
         <!-- Button Add Question -->
-        <div class="text-center col-12">
+        <!-- <div class="text-center col-12">
             <button onclick="addQuizz()" type="button" class="btn btn-lg btn-light mx-auto mt-5"
                 style="background-color: #696d97!important;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus"
@@ -104,14 +104,26 @@
                 </svg>
                 Add a question
             </button>
-        </div>
+        </div> -->
 
         <!-- Button Submit -->
-        <div class="text-end col-12">
-            <button type="submit" class="btn btn-lg btn-light me-5 my-auto"
-                style="background-color: #696d97!important;">
-                Submit
-            </button>
+        <div class="container text-center mt-5">
+            <div class="input-group d-inline-block ">
+                <button type="button" class="btn btn-lg btn-light text-light"
+                    onclick="location.href='{% url 'display_quizzes' challenge.id %}'"
+                    style="background-color: #800202!important;">
+                    Exit
+                </button>
+                <button type="submit" class="btn btn-lg btn-light text-light"
+                    style="background-color: #696d97!important;">
+                    Submit & Continue
+                </button>
+
+            </div>
+        </div>
+
+        <div class="text-end col-12 my-3">
+
         </div>
     </form>
 
@@ -127,7 +139,7 @@
             const newcard = document.createElement('DIV');
             newcard.className = 'card col-sm-7 pt-0 rounded-4 mx-auto mt-5';
             newcard.id = 'quizz-card' + num;
-            newcard.innerHTML = '<div class="container text-end w-100"> <button type="button" onclick="delQuizz(event)" id="delQuizzBtn" class="btn-close-white btn-close me-0" aria-label="Close"></button> </div> {% csrf_token %} {% for field in form %} {% if field.name == "question" or field.name == "answer" %} <label for="{{field.name}}" class="text-capitalize ms-3"> {{field.name}} </label> <div class="form-control bg-transparent border-0"> <textarea class="form-control bg-transparent border-2 text-light fs-4" style="border-color: #696d97;" name="{{field.name}}" id="{{ field.name }}"></textarea> </div> {% elif field.name == "file_content" %} <div class="row ms-3"> <div class="form-check col-2" style="pointer-events: none;"> <input class="form-check-input" style="pointer-events:all;" type="checkbox" value="" id="flexCheckDefault" onclick="addfile(event)"> <label class="form-check-label" for="flexCheckDefault"> Add file </label> </div> <!-- <div class="ms-3 col-3" id="uploadElement"> <input type="file" name="file_content" id="id_file_content"> </div> --> </div> {% else %} <label for="{{field.name}}" class="text-capitalize ms-3"> {{field.name}} </label> <div class="form-control bg-transparent border-0"> <input type="text" class="form-control bg-transparent border-2 text-light fs-4" style="border-color: #696d97;" name="{{field.name}}" id="{{ field.name }}"> </div> {% endif %} {% endfor %} <div style="width: 100%;" id="hint-container"> <!-- <div class="input-group form-control bg-transparent border-0 hint-element"> <input type="" class="d-none" id="quizz_id" name="quizz_id"> <span class="input-group-text bg-transparent border-2 text-light fs-4 my-3">Hint</span> <input type="text" placeholder="Hint" style="width: 350px;" aria-label="Hint" class="form-control bg-transparent border-2 text-light fs-4 my-3" name="hint"> <input type="text" placeholder="Points" style="min-width: 70px;" aria-label="Point" class="form-control bg-transparent border-2 text-light fs-4 my-3" name="hint_point"> <button onclick="delHint(event)" class="btn btn-outline-danger my-3 fs-4" type="button" id="hintDelBtn">Discard</button> </div> --> </div> <div class="text-end col-12"> <button onclick="addHint(event)" type="button" class="btn btn-sm btn-light mx-auto mb-2 me-3" style="background-color: #696d97!important;"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16"> <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"> </path> </svg> Add a hint </button> </div>';
+            newcard.innerHTML = '<div class="container text-end w-100"> <button type="button" onclick="delQuizz(event)" id="delQuizzBtn" class="btn-close-white btn-close me-0" aria-label="Close"></button> </div> {% csrf_token %} {% for field in form %} {% if field.name == "question" or field.name == "answer" %} <label for="{{field.name}}" class="text-capitalize ms-3"> {{field.name}} </label> <div class="form-control bg-transparent border-0"> <textarea class="form-control bg-transparent border-2 text-light fs-4" style="border-color: #696d97;" name="{{field.name}}" id="{{ field.name }}" required></textarea> </div> {% elif field.name == "file_content" %} <div class="row ms-3"> <div class="form-check col-2" style="pointer-events: none;"> <input class="form-check-input" style="pointer-events:all;" type="checkbox" value="" id="flexCheckDefault" onclick="addfile(event)"> <label class="form-check-label" for="flexCheckDefault"> Add file </label> </div> <!-- <div class="ms-3 col-3" id="uploadElement"> <input type="file" name="file_content" id="id_file_content"> </div> --> </div> {% else %} <label for="{{field.name}}" class="text-capitalize ms-3"> {{field.name}} </label> <div class="form-control bg-transparent border-0"> <input type="text" class="form-control bg-transparent border-2 text-light fs-4" style="border-color: #696d97;" name="{{field.name}}" id="{{ field.name }}" required> </div> {% endif %} {% endfor %} <div style="width: 100%;" id="hint-container"> <!-- <div class="input-group form-control bg-transparent border-0 hint-element"> <input type="" class="d-none" id="quizz_id" name="quizz_id"> <span class="input-group-text bg-transparent border-2 text-light fs-4 my-3">Hint</span> <input type="text" placeholder="Hint" style="width: 350px;" aria-label="Hint" class="form-control bg-transparent border-2 text-light fs-4 my-3" name="hint"> <input type="text" placeholder="Points" style="min-width: 70px;" aria-label="Point" class="form-control bg-transparent border-2 text-light fs-4 my-3" name="hint_point"> <button onclick="delHint(event)" class="btn btn-outline-danger my-3 fs-4" type="button" id="hintDelBtn">Discard</button> </div> --> </div> <div class="text-end col-12"> <button onclick="addHint(event)" type="button" class="btn btn-sm btn-light mx-auto mb-2 me-3" style="background-color: #696d97!important;"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16"> <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"> </path> </svg> Add a hint </button> </div>';
 
             container.appendChild(newcard);
         }
@@ -142,7 +154,8 @@
                 const newElement = document.createElement('DIV');
                 newElement.className = 'ms-3 col-3';
                 newElement.id = 'uploadElement'
-                newElement.innerHTML = '<input type="file" name="file_content" id="id_file_content">';
+                var _id = event.target.parentElement.parentElement.parentElement.id;
+                newElement.innerHTML = `<input type="file" name="file_content" id="id_file_content"><input type="" class="d-none" name="id_file" value="${_id}">`;
                 container.appendChild(newElement)
             }
             else {
@@ -155,7 +168,7 @@
 
             const newcard = document.createElement('DIV');
             newcard.className = 'input-group form-control bg-transparent border-0 hint-element';
-            newcard.innerHTML = '<input type="" class="d-none" id="quizz_id" name="quizz_id"><span class="input-group-text bg-transparent border-2 text-light fs-4 my-3">Hint</span> <input type="text" placeholder="Hint" style="width: 350px;" aria-label="Hint" class="form-control bg-transparent border-2 text-light fs-4 my-3" name="hint"> <input type="text" placeholder="Points" style="min-width: 70px;" aria-label="Point" class="form-control bg-transparent border-2 text-light fs-4 my-3" name="hint_point"> <button onclick="delHint(event)" class="btn btn-outline-danger my-3 fs-4" type="button" id="hintDelBtn">Discard</button>'
+            newcard.innerHTML = '<input type="" class="d-none" id="quizz_id" name="quizz_id"><span class="input-group-text bg-transparent border-2 text-light fs-4 my-3">Hint</span> <input type="text" placeholder="Hint" style="width: 350px;" aria-label="Hint" class="form-control bg-transparent border-2 text-light fs-4 my-3" name="hint" required> <input type="text" placeholder="Points" style="min-width: 70px;" aria-label="Point" class="form-control bg-transparent border-2 text-light fs-4 my-3" name="hint_point" required> <button onclick="delHint(event)" class="btn btn-outline-danger my-3 fs-4" type="button" id="hintDelBtn">Discard</button>'
 
             container.appendChild(newcard);
 
