@@ -611,7 +611,7 @@
 
 .day-have-note {
   background-color: yellowgreen;
-  border-radius:  50%;
+  border-radius: 50%;
   font-weight: bold;
   color: white;
 }
@@ -804,7 +804,6 @@
   z-index: 1;
 }
 
-
 /*=======================
   Pagination
 ========================*/
@@ -831,10 +830,10 @@
   color: var(--color-light);
 }
 
-.pagination_ .btn{
-    border: 1px solid #51546e;
-    background-color: #3f4156;
-    font-size: inherit;
+.pagination_ .btn {
+  border: 1px solid #51546e;
+  background-color: #3f4156;
+  font-size: inherit;
 }
 
 .sticky {
@@ -842,3 +841,4 @@
   top: 0;
   z-index: 1;
 }
+
