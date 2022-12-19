@@ -18,6 +18,6 @@ def news(request):
     except EmptyPage:
         post_pagin = paginator.page(paginator.num_pages)
     for entry in post_pagin:
-         entry['thumbnail'] = entry.media_thumbnail[0]['url']
+         entry['thumbnail'] = entry.links[1]['href']
     context = {"post_pagin":post_pagin}
     return render(request, 'news/news.html', context)
