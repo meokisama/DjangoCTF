@@ -8,7 +8,12 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from json import dumps
-import json
+from django.views.generic import ListView
+from challenge.models import Challenge
+
+from datetime import date, datetime
+from django.utils import timezone
+# import pandas as pd
 
 User = get_user_model()
 from community.models import Note
@@ -16,9 +21,12 @@ from community.models import Note
 # Create your views here.
 
 def home(request):
+    now = timezone.now()
+    date = now.strftime("%Y-%m-%d %H:%M:%S")
     # challenges = Challenge.objects.all()
-    # context = {'challenges':challenges}
-    return render(request, 'index.html')
+    challenges = Challenge.objects.all().filter(date_end__gte=date)
+    context = {'challenges':challenges}
+    return render(request, 'index.html',context)
 
 # def challenge(request):
 #     challenge = Challenge.objects.get(id=pk)
@@ -35,19 +43,26 @@ def calendar(request):
             [d,m,y]= str(request.POST.get('note_date')).split('/')
             user = User.objects.get(pk=request.user.id)
             date = y + "-" + m + "-"+ d
-            content = request.POST.get('note_content')
-            if content != '':
-                try:
-                    note = Note.objects.filter(user=user).get(date=date)
-                    note.content = request.POST.get('note_content')
-                except:
-                    note = Note.objects.create(user=user,date=date,content=content)
-                note.save()
-            else:
+
+            if 'note_delete' in request.POST:
                 try:
                     Note.objects.filter(user=user).get(date=date).delete()
                 except:
-                    messages.info(request, "Note content cann't be empty")
+                    messages.info(request, "There's not note saved")
+            else:
+                content = request.POST.get('note_content')
+                if content != '':
+                    try:
+                        note = Note.objects.filter(user=user).get(date=date)
+                        note.content = request.POST.get('note_content')
+                    except:
+                        note = Note.objects.create(user=user,date=date,content=content)
+                    note.save()
+                else:
+                    try:
+                        Note.objects.filter(user=user).get(date=date).delete()
+                    except:
+                        messages.info(request, "Note content can't be empty")
 
             return redirect('calendar')
 
@@ -118,3 +133,25 @@ def userLogin(request):
 def user_logout(request):
     logout(request)
     return redirect("home")
+
+class ChallengeListView(ListView):
+    model = Challenge
+    context_object_name = 'object_list'
+    template_name = 'index.html'
+    ordering = 'day_created'
+    paginate_by = 3
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     return context
+
+    def get_queryset(self):
+        now = timezone.now()
+        date = now.strftime("%Y-%m-%d %H:%M:%S")
+        
+        queryset = Challenge.objects.filter(date_end__gte=date, name__contains = (self.request.GET.get('q') or ''))
+        queryset.order_by('date_created')
+        return queryset
+
+
+

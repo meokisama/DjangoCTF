@@ -274,7 +274,7 @@ a {
 .header {
   padding: 1.5rem;
   background-color: #212529;
-  padding: 2rem 0 4rem 0;
+  padding: 1rem 0 1rem 0;
 }
 
 .header ul {
@@ -1226,7 +1226,7 @@ ul {
 }
 .footer {
   background-color: #212529;
-  padding: 70px 0;
+  padding: 15px 0;
 }
 .footer-col {
   width: 25%;
@@ -1330,4 +1330,10 @@ ul {
     border: 1px solid #51546e;
     background-color: #3f4156;
     font-size: inherit;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }

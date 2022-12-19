@@ -343,6 +343,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: left;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 /* End of event card*/
 
@@ -510,6 +512,14 @@
   text-align: center;
 }
 
+.curr-month {
+  background-color: #696d97;
+}
+
+.curr-year {
+  background-color: #696d97;
+}
+
 .month-list {
   display: grid;
   grid-template-columns: repeat(4, auto);
@@ -532,6 +542,12 @@
 
 .month-list div {
   border: 2px solid transparent;
+  border-radius: 5%;
+  width: 80%;
+  height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .month-list div:hover {
@@ -561,6 +577,12 @@
 
 .year-list div {
   border: 2px solid transparent;
+  border-radius: 5%;
+  width: 80%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .year-list div:hover {
@@ -617,6 +639,14 @@
   height: 12%;
 }
 
+.note-header span {
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  font-family: "Poppins", sans-serif;
+  font-weight: 800 !important;
+  margin: 0 1%;
+}
+
 .note-body {
   background-color: #3f4156;
   color: #b2bdbd !important;
@@ -631,6 +661,12 @@
   height: 88%;
 }
 
+.date-container {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  /* display: flex; */
+}
+
 .note-date {
   display: grid;
   border: 2px solid transparent;
@@ -640,9 +676,25 @@
   font-family: "Poppins", sans-serif;
   color: #8f8f8f;
   font-size: 2rem;
+  position: relative;
+  cursor: pointer;
 }
 
 .note-date:hover {
+  color: #71c6dd;
+}
+
+.note-today {
+  font-size: 15px;
+  text-decoration: underline;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  color: #8f8f8f;
+  cursor: pointer;
+}
+
+.note-today:hover {
   color: #71c6dd;
 }
 
@@ -686,12 +738,20 @@
   border: none;
   border-radius: 5px;
   color: #2c2c2c;
-  position: absolute;
   font-family: "Poppins", sans-serif;
   font-size: 1.75rem;
   font-weight: 500;
-  right: 0;
   bottom: -25%;
+}
+
+#note-save {
+  position: absolute;
+  right: 0;
+}
+
+#note-delete {
+  position: absolute;
+  right: 25%;
 }
 /* end of Calendar */
 
@@ -737,3 +797,9 @@
 }
 
 /* End of Chart */
+
+.sticky {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}

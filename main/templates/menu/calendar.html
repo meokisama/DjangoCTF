@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CTFGames - Cybersecurity Competition</title>
     {% load static %}
-    <link rel="stylesheet" href="../../static/main/style.css">
+    <link rel="stylesheet" href="{% static 'main/style.css' %}?{% now " U" %}">
     <link rel="shortcut icon" type="image/png" href="{% static 'main/logo-black.png' %}" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -14,6 +14,13 @@
 
 <body>
     {% include 'navbar.html' %}
+    {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+            <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
     {% block content %}
     <div style="min-height:100vh;">
         <div class="main">
@@ -47,17 +54,22 @@
             </div>
             <div class="note">
                 <div class="note-header">
-                    <span class="month-picker">NOTE</span>
+                    <span>NOTE</span>
                 </div>
                 <div class="note-body">
-                    <div class="note-date"></div>
+                    <div class="date-container">
+                        <div class="note-today" style="color:#3f4156">To today</div>
+                        <div class="note-date"></div>
+                        <div class="note-today" id="note_today">To today</div>
+                    </div>
                     <div class="note-content">
                         <form method="POST">
                             {% csrf_token %}
                             <textarea hidden id="form-note-date" name="note_date"></textarea>
                             <textarea id="note-text" name="note_content" placeholder="Write down some note..."></textarea>
                             <textarea readonly="true" id="system-note"></textarea>
-                            <input type="submit" value="Save">
+                            <input type="submit" id="note-delete" name="note_delete" value="Delete" hidden="true">
+                            <input type="submit" id="note-save" name="note_save" value="Save">
                         </form>
                     </div>
                 </div>
@@ -109,7 +121,10 @@
                         day.classList.add('curr-date')
                         if (note_date.innerHTML == day.innerHTML + "/" + (curr_month + 1) + "/" + curr_year) 
                             try {
-                                document.getElementById("note-text").innerHTML = data[key]["d" + day.innerHTML]
+                                if (data[key]["d" + day.innerHTML] != null) {
+                                    document.getElementById("note-text").innerHTML = data[key]["d" + day.innerHTML]
+                                    document.getElementById("note-delete").hidden = false
+                                }
                             } catch (err) {}
                     }
                     if (data[key] != null && data[key]["d" + day.innerHTML] != null) 
@@ -123,9 +138,12 @@
                         if (day.classList.contains('day-have-note')) 
                             try {
                                 document.getElementById("note-text").innerHTML = data[key]["d" + day.innerHTML]
+                                document.getElementById("note-delete").hidden = false
                             } catch (err) {}
-                        else
+                        else {
                             document.getElementById("note-text").innerHTML = null
+                            document.getElementById("note-delete").hidden = true
+                        }
 
                         if (last_chosen_day != -1) {
                             calendar.querySelector('.c' + last_chosen_day).classList.remove('chosen-date')
@@ -142,25 +160,8 @@
             last_chosen_day = -1
         }
 
-        let month_list = calendar.querySelector('.month-list')
+        onclickDay = (day) => {
 
-        month_names.forEach((e, index) => {
-            let month = document.createElement('div')
-            month.innerHTML = `<div>${e}</div>`
-            month.querySelector('div').onclick = () => {
-                month_list.classList.remove('show')
-                curr_month = index
-                generateCalendar(curr_month, curr_year)
-            }
-            month_list.appendChild(month)
-        })
-
-        let month_picker = calendar.querySelector('#month-picker')
-        let year_picker = calendar.querySelector('#year-picker')
-
-        month_picker.onclick = () => {
-            month_list.classList.add('show')
-            year_list.classList.remove('show')
         }
 
         let data = ''
@@ -171,17 +172,46 @@
             } catch (err) {}
         }
 
-        let currDate = new Date()
-        let curr_month = currDate.getMonth()
-        let curr_year = currDate.getFullYear()
+        let today = new Date()
+        let curr_month = today.getMonth()
+        let curr_year = today.getFullYear()
         let note_date = document.querySelector('.note-date')
-        note_date.innerHTML = currDate.getDate() + "/" + (curr_month + 1) + "/" + curr_year
+        note_date.innerHTML = today.getDate() + "/" + (curr_month + 1) + "/" + curr_year
+
         let form_note_date = document.getElementById('form-note-date')
         form_note_date.innerHTML = note_date.innerHTML
         let year_list = document.querySelector('.year-list')
         let ten_years = []
 
+        let month_list = calendar.querySelector('.month-list')
+        let month_picker = calendar.querySelector('#month-picker')
+        let year_picker = calendar.querySelector('#year-picker')
+
         generateCalendar(curr_month, curr_year)
+
+        month_picker.onclick = () => {
+            if (curr_year == today.getFullYear()) 
+                month_list.querySelector('div:nth-child(' + (today.getMonth() + 1) + ')').classList.add('curr-month')
+            else 
+                month_list.querySelector('div:nth-child(' + (today.getMonth() + 1) + ')').classList.remove('curr-month')
+            if (!month_list.classList.contains('show')) {
+                month_list.classList.add('show')
+                year_list.classList.remove('show')
+            } else {
+                month_list.classList.remove('show')
+            }
+        }
+
+        month_names.forEach((e, index) => {
+            let month = document.createElement('div')
+            month.innerHTML = `<p>${e}</p>`
+            month.onclick = () => {
+                month_list.classList.remove('show')
+                curr_month = index
+                generateCalendar(curr_month, curr_year)
+            }
+            month_list.appendChild(month)
+        })
 
         generateTenYears = (year) => {
             for (let i = 0; i < 10; i++) {
@@ -190,8 +220,10 @@
             year_list.innerHTML = ''
             ten_years.forEach((e, index) => {
                 let year = document.createElement('div')
-                year.innerHTML = `<div>${e}</div>`
-                year.querySelector('div').onclick = () => {
+                year.innerHTML = `<p>${e}</p>`
+                if (e == today.getFullYear())
+                    year.classList.add('curr-year')
+                year.onclick = () => {
                     year_list.classList.remove('show')
                     curr_year = e
                     generateCalendar(curr_month, curr_year)
@@ -202,8 +234,12 @@
 
         year_picker.onclick = () => {
             generateTenYears(curr_year)
-            year_list.classList.add('show')
-            month_list.classList.remove('show')
+            if (!year_list.classList.contains('show')) {
+                year_list.classList.add('show')
+                month_list.classList.remove('show')
+            } else {
+                year_list.classList.remove('show')
+            }
         }
 
         document.querySelector('#prev-month').onclick = () => {
@@ -244,6 +280,19 @@
             }
             last_chosen_day = date[0]
             calendar.querySelector('.c' + date[0]).classList.add('chosen-date')
+
+            year_list.classList.remove('show')
+            month_list.classList.remove('show')
+        }
+
+        document.getElementById('note_today').onclick = () => {
+            if (curr_year != today.getFullYear() || curr_month != today.getMonth()) {
+                curr_month = today.getMonth()
+                curr_year = today.getFullYear()
+                generateCalendar(curr_month, curr_year)
+            }
+
+            calendar.querySelector('.c' + today.getDate()).click()
         }
 
         note_date.addEventListener('wheel', function (e) {
