@@ -24,7 +24,7 @@ def home(request):
     now = timezone.now()
     date = now.strftime("%Y-%m-%d %H:%M:%S")
     # challenges = Challenge.objects.all()
-    challenges = Challenge.objects.all().filter(date_end__gte=date)
+    challenges = Challenge.objects.all().filter(date_end__gte=date,date_start__lte=date)
     context = {'challenges':challenges}
     return render(request, 'index.html',context)
 
@@ -138,8 +138,8 @@ class ChallengeListView(ListView):
     model = Challenge
     context_object_name = 'object_list'
     template_name = 'index.html'
-    ordering = 'day_created'
-    paginate_by = 3
+    ordering = 'date_created'
+    paginate_by = 6
 
     # def get_context_data(self, **kwargs):
     #     context = super().get_context_data(**kwargs)
@@ -149,9 +149,64 @@ class ChallengeListView(ListView):
         now = timezone.now()
         date = now.strftime("%Y-%m-%d %H:%M:%S")
         
-        queryset = Challenge.objects.filter(date_end__gte=date, name__contains = (self.request.GET.get('q') or ''))
+        queryset = Challenge.objects.filter(date_end__gte=date,date_start__lte=date)
         queryset.order_by('date_created')
         return queryset
 
 
+class ChallengeListViewUpcoming(ListView):
+    model = Challenge
+    context_object_name = 'object_list'
+    template_name = 'upcoming.html'
+    ordering = 'date_created'
+    paginate_by = 6
 
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     return context
+
+    def get_queryset(self):
+        now = timezone.now()
+        date = now.strftime("%Y-%m-%d %H:%M:%S")
+        
+        queryset = Challenge.objects.filter(date_start__gte=date, name__contains = (self.request.GET.get('q') or ''))
+        queryset.order_by('date_created')
+        return queryset
+
+class ChallengeListViewExpired(ListView):
+    model = Challenge
+    context_object_name = 'object_list'
+    template_name = 'expired.html'
+    ordering = 'date_created'
+    paginate_by = 6
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     return context
+
+    def get_queryset(self):
+        now = timezone.now()
+        date = now.strftime("%Y-%m-%d %H:%M:%S")
+        
+        queryset = Challenge.objects.filter(date_end__lte=date, name__contains = (self.request.GET.get('q') or ''))
+        queryset.order_by('date_created')
+        return queryset
+
+class ChallengeListViewSearching(ListView):
+    model = Challenge
+    context_object_name = 'object_list'
+    template_name = 'search.html'
+    ordering = 'date_created'
+    paginate_by = 6
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     return context
+
+    def get_queryset(self):
+        now = timezone.now()
+        date = now.strftime("%Y-%m-%d %H:%M:%S")
+        
+        queryset = Challenge.objects.filter(name__contains = (self.request.GET.get('q') or ''))
+        queryset.order_by('date_created')
+        return queryset

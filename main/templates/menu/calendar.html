@@ -66,7 +66,7 @@
                         <form method="POST">
                             {% csrf_token %}
                             <textarea hidden id="form-note-date" name="note_date"></textarea>
-                            <textarea id="note-text" name="note_content" placeholder="Write down some note..."></textarea>
+                            <textarea id="note-text" name="note_content" placeholder="Write down some note..." required></textarea>
                             <textarea readonly="true" id="system-note"></textarea>
                             <input type="submit" id="note-delete" name="note_delete" value="Delete" hidden="true">
                             <input type="submit" id="note-save" name="note_save" value="Save">

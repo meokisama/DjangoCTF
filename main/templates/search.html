@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CTFGames - Cybersecurity Competition</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main/style.css' %}?{% now " U" %}">
+    <link rel="shortcut icon" type="image/png" href="{% static 'main/logo-black.png' %}" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+    {% include 'navbar.html' %}
+    {% load main_extras %}
+    {% block content %}
+
+    <div class="center-title">
+        <h1 id="upcoming">Search Results</h1>
+    </div>
+
+
+    <!-- Start of Events -->
+    {% if object_list %}
+    <section class="text-light p-5 bg-dark" id="section-event">
+        <div class="container p-4">
+            <div class="row text-center">
+                {% for challenge in object_list %}
+                <div class="col-lg-4 my-2" onclick="location.href='{% url 'join_challenge' challenge.id %}'">
+                    <div class="card">
+                        <div class="ThumbnailWrapper">
+                            <div class="InnerWrapper">
+                                {% load static %}
+                                <image src="{% static 'main/images/thumb.png' %}">
+                            </div>
+                        </div>
+                        <div class="card-text">
+                            <h3 class="card-title">{{ challenge.name }}</h3>
+                            <div>
+                                <p>
+                                    <span class="text-bold">Start at: </span> {{ challenge.date_start }}
+                                    <br>
+                                    <span class="text-bold">End at: </span> {{ challenge.date_end }}
+                                </p>
+
+                            </div>
+                            <p class="card-description">{{ challenge.description }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <div class="pagination_">
+                    <span class="step-links">
+                        {% if page_obj.has_previous %}
+                        <a href="{{ request.get_full_path|add_or_replace_q:'page' }}page=1"><button type="button"
+                                class="btn text-light" style="border: 1px solid #51546e;
+              background-color: #3f4156;
+              font-size: inherit;">First</button></a>
+                        <a
+                            href="{{ request.get_full_path|add_or_replace_q:'page' }}page={{ page_obj.previous_page_number }}"><button
+                                type="button" class="btn text-light" style="border: 1px solid #51546e;
+              background-color: #3f4156;
+              font-size: inherit;">Previous</button></a>
+                        {% endif %}
+
+                        <button type="button" class="btn text-light" style="border: 1px solid #51546e;
+              background-color: #3f4156;
+              font-size: inherit;"><span class="current">
+                                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                            </span></button>
+
+                        {% if page_obj.has_next %}
+                        <a
+                            href="{{ request.get_full_path|add_or_replace_q:'page' }}page={{ page_obj.next_page_number }}">
+                            <button type="button" class="btn text-light" style="border: 1px solid #51546e;
+              background-color: #3f4156;
+              font-size: inherit;">Next</button>
+                        </a>
+
+                        <a
+                            href="{{ request.get_full_path|add_or_replace_q:'page' }}page={{ page_obj.paginator.num_pages }}"><button
+                                type="button" class="btn text-light" style="border: 1px solid #51546e;
+              background-color: #3f4156;
+              font-size: inherit;">Last</button></a>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End of Events -->
+    {% else %}
+    <div class="containter text-center" style="margin-top: 100px;">
+        <p class="h2-title-description"><i>There is no challenge matched your requirement. <br> 
+            Try again with more correct argument!</i></p>
+    </div>
+    {% endif %}
+
+    {% endblock content %}
+    {% include 'footer.html' %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
