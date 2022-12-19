@@ -22,14 +22,10 @@
         </ul>
     {% endif %}
     {% block content %}
-    <div style="min-height:100vh;">
+    <div style="min-height:100vh; min-width: 200vh;">
         <div class="main">
             <div class="calendar">
                 <div class="calendar-header">
-                    <!-- <span class="month-change" id="prev-month"><</span>
-                    <span class="month-picker" id="month-picker">February</span>
-                    <span class="year-picker" id="year-picker">2022</span>
-                    <span class="month-change" id="next-month">></span> -->
                     <ul id="calendar__header">
                         <li class="month-change" id="prev-month" style="padding-right: 2rem;">&#10092;</li>
                         <li class="month-picker" id="month-picker">February</li>
@@ -158,10 +154,6 @@
             }
 
             last_chosen_day = -1
-        }
-
-        onclickDay = (day) => {
-
         }
 
         let data = ''
