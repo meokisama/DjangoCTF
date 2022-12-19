@@ -803,3 +803,42 @@
   top: 0;
   z-index: 1;
 }
+
+
+/*=======================
+  Pagination
+========================*/
+.pagination_ {
+  margin-top: 8rem;
+  margin-bottom: 10rem;
+  padding-top: 10rem;
+}
+
+.pagination_ > ul {
+  flex-wrap: wrap;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.pagination_ .btn {
+  color: var(--color-sub);
+}
+
+.pagination_ .btn.btn--sub {
+  color: var(--color-light);
+}
+
+.pagination_ .btn{
+    border: 1px solid #51546e;
+    background-color: #3f4156;
+    font-size: inherit;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}

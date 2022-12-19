@@ -17,6 +17,7 @@
   {% load main_extras %}
   {% block content %}
 
+  <div style="min-height: 100vh">
   <!-- Start of Events -->
   <section class="text-light p-5 bg-dark" id="section-event">
     <div class="center-title">
@@ -54,17 +55,17 @@
         <div class="pagination_">
           <span class="step-links">
               {% if page_obj.has_previous %}
-                  <a href="{{ request.get_full_path|add_or_replace_q:'page' }}page=1">&laquo; first</a>
-                  <a href="{{ request.get_full_path|add_or_replace_q:'page' }}page={{ page_obj.previous_page_number }}">previous</a>
+                  <a class="btn" href="{{ request.get_full_path|add_or_replace_q:'page' }}page=1">&laquo; First</a>
+                  <a class="btn" href="{{ request.get_full_path|add_or_replace_q:'page' }}page={{ page_obj.previous_page_number }}">Previous</a>
               {% endif %}
       
-              <span class="current">
+              <span class="btn">
                   Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
               </span>
       
               {% if page_obj.has_next %}
-                <a href="{{ request.get_full_path|add_or_replace_q:'page' }}page={{ page_obj.next_page_number }}">next</a>
-                <a href="{{ request.get_full_path|add_or_replace_q:'page' }}page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                <a class="btn" href="{{ request.get_full_path|add_or_replace_q:'page' }}page={{ page_obj.next_page_number }}">Next</a>
+                <a class="btn" href="{{ request.get_full_path|add_or_replace_q:'page' }}page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
               {% endif %}
           </span>
         </div>
@@ -72,6 +73,7 @@
     </div>
   </section>
   <!-- End of Events -->
+</div>
 
   {% endblock content %}
   {% include 'footer.html' %}
