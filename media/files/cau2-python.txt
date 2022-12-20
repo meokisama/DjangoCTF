@@ -1,0 +1,1 @@
+Số b được dùng để tính toán các số nguyên trong phạm vi từ 10 đến 200 thì b thuộc kiểu nào

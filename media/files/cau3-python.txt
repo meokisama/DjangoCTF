@@ -1,0 +1,1 @@
+Số c được dùng để lưu tổng (2.5+1.2) thì c thuộc kiểu nào
