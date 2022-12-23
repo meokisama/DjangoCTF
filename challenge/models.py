@@ -41,6 +41,8 @@ class Answer(models.Model):
     quizz_id = models.IntegerField()
     answer = models.TextField(null=False, blank=False)
     point = models.IntegerField()
+    status = models.CharField(max_length=10)
+    
 
     def __str__(self):
         return self.username

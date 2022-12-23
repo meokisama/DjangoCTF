@@ -1,1 +1,0 @@
-Lệnh nào dùng để liệt kê các file và thư mục trong hệ thống

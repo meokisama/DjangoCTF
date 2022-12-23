@@ -29,7 +29,7 @@
   <div class="row container">
     {% for quizz in quizzes %}
     <div class="col-2 m-2 text-center">
-      {% if quizz_status|index:quizz.id == "yes" %}
+      {% if completed|index:quizz.id == "yes" %}
       <div data-toggle="modal" data-target="#myModal" class="card clickable-element" onclick="_id={{quizz.id}}">
         <div class="card-title border-bottom">{{quizz.name}}</div>
         <div class="card-body">
@@ -37,9 +37,18 @@
         </div>
       </div>
 
-      <div style="color: green;" id="check">
+      <div style="color: yellow;" id="check">
         Completed <span class="glyphicon glyphicon-ok"></span>
       </div>
+      {% if status|index:quizz.id == "True" %}
+      <div style="color: green;">
+        True <span class="glyphicon glyphicon-ok"></span>
+      </div>
+      {% else %}
+      <div style="color: red;">
+        False <span class="glyphicon glyphicon-remove"></span>
+      </div>
+      {% endif %}
       {% else %}
       <div onclick="location.href='{% url 'play_challenge_quizz' challenge.id quizz.id %}'"
         class="card clickable-element">

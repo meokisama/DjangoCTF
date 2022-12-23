@@ -1,1 +1,0 @@
-Lệnh nào dùng để xác định được các kết nối trong trạng thái active thông qua Terminal

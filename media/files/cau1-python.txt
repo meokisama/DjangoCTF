@@ -1,1 +1,0 @@
-Biến s được dùng để chứa các kí tự trong phạm vi từ ‘a’ đến ‘z’ thì biến s thuộc kiểu nào

@@ -237,25 +237,30 @@ def play_challenge(request, pk):
     quizzes = Quizz.objects.all().filter(challenge_id=pk).values(
         'id', 'name', 'question', 'answer', 'point', 'file_content')
 
-    quizz_status = {}
+    completed = {}
+    status = {}
 
     score = 0
 
     for quizz in quizzes:
         try:
-            obj = Answer.objects.get(quizz_id=quizz['id'])
-            quizz_status[quizz['id']] = 'yes'
+            obj = Answer.objects.get(quizz_id=quizz['id'],username=request.user)
+            completed[quizz['id']] = 'yes'
+            if obj.status == 'True':
+                status[quizz['id']] ="True"
+            else:
+                status[quizz['id']] ="False"
             score += obj.point
         except Answer.DoesNotExist:
-            quizz_status[quizz['id']] = 'no'
+            completed[quizz['id']] = 'no' 
             pass
 
-    print(quizz_status)
-
     context = {'challenge': challenge, 'quizzes': quizzes,
-               'quizz_status': quizz_status, 'score': score}
+               'completed': completed, 'score': score, 'status':status}
     return render(request, 'play_challenge.html', context)
 
+from datetime import date, datetime
+from django.utils import timezone
 
 def play_challenge_quizz(request, pk, pk1):
     challenge = Challenge.objects.get(id=pk)
@@ -263,7 +268,9 @@ def play_challenge_quizz(request, pk, pk1):
     hints = Hint.objects.filter(quizz_id=quizz.id)
 
     _point = 0
-
+    _status = "False"
+    now = timezone.now()
+    date = now.strftime("%Y-%m-%d %H:%M:%S")
     if request.method == 'POST':
         _answer = request.POST.get('answer')
         minus_point = request.POST.get('minus-point')
@@ -271,13 +278,16 @@ def play_challenge_quizz(request, pk, pk1):
         # print(minus_point)
         if _answer == quizz.answer:
             _point = quizz.point-int(minus_point)
+            _status="True"
         else:
             _point = 0
+            _status="False"
 
         try:
-            obj = Answer.objects.get(quizz_id=quizz.id)
+            obj = Answer.objects.get(quizz_id=quizz.id,username=request.user.username)
             _point = int(75*int(_point)/100)
             obj.point = _point
+            obj.status=_status
             obj.save()
         except Answer.DoesNotExist:
             answer_obj = Answer.objects.create(
@@ -285,7 +295,8 @@ def play_challenge_quizz(request, pk, pk1):
                 username=request.user.username,
                 quizz_id=quizz.id,
                 answer=_answer,
-                point=_point
+                point=_point,
+                status=_status
             )
             answer_obj.save()
 
