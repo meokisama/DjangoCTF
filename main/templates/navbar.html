@@ -14,9 +14,8 @@
     {% load static %}
     <header class="header header--loggedIn sticky-top sticky">
         <div class="container">
-            <a href="{% url 'home' %}" class="header__logo">
+            {% comment %} <a href="{% url 'home' %}" class="header__logo">
                 <img src="{% static 'main/logo.png' %}" />
-                <!-- <h1>CTFGames</h1> -->
             </a>
             <ul>
                 <li>
@@ -34,7 +33,47 @@
                 <li>
                     <a href="{% url 'community' %}">Community</a>
                 </li>
-            </ul>
+            </ul> {% endcomment %}
+
+
+            <div class="nav">
+                <input type="checkbox" class='nav__input' name="" id="nav__input">
+                <nav class="nav__pc">
+                    <a href="{% url 'home' %}" class="site__logo">
+                        <img src="{% static 'main/logo.png' %}" />
+                    </a>
+                  <ul class="nav__list">
+                    <li><a href="{% url 'challenge' %}" class="nav__link">Challenges</a></li>
+                    <li><a href="{% url 'calendar' %}" class="nav__link">Calendar</a></li>
+                    <li><a href="{% url 'chart' %}" class="nav__link">Charts</a></li>
+                    <li><a href="{% url 'news' %}" class="nav__link">News</a></li>
+                    <li><a href="{% url 'community' %}" class="nav__link">Community</a></li>
+                  </ul>
+                </nav>
+                <label for="nav__input" class="nav__bar-btn">
+                  <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars" class="svg-inline--fa fa-bars fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path></svg>
+                </label>
+                <label for="nav__input" class="nav__overlay">
+                </label>
+                <nav  class="nav__mobile">
+                    <a href="{% url 'home' %}" class="header__logo ">
+                        <img src="{% static 'main/logo.png' %}" />
+                    </a>
+                  <ul class="nav__mobile-list">
+                    <li><a href="{% url 'challenge' %}" class="nav__mobile-link">Challenges</a></li>
+                    <li><a href="{% url 'calendar' %}" class="nav__mobile-link">Calendar</a></li>
+                    <li><a href="{% url 'chart' %}" class="nav__mobile-link">Charts</a></li>
+                    <li><a href="{% url 'news' %}" class="nav__mobile-link">News</a></li>
+                    <li><a href="{% url 'community' %}" class="nav__mobile-link">Community</a></li>
+                  </ul>
+                  <label for="nav__input" class="nav__mobile-btn">
+                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times" class="svg-inline--fa fa-times fa-w-11" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512"><path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path></svg>
+                  </label>
+                </nav>
+            </div>
+
+
+
             <form class="header__search" method="GET" action="{% url 'search' %}">
                 <label>
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
