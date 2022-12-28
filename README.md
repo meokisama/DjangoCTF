@@ -44,4 +44,10 @@ python manage.py runserver
 
 ### Preview
 
-![](demo.png)
+![](demo01.png)
+
+![](demo02.png)
+
+![](demo03.png)
+
+![](demo04.png)
