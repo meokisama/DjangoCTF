@@ -55,11 +55,11 @@
                 </label>
                 <label for="nav__input" class="nav__overlay">
                 </label>
-                <nav  class="nav__mobile">
-                    <a href="{% url 'home' %}" class="header__logo ">
+                <nav  class="nav__mobile" style="background-color:#696d97;">
+                    <a href="{% url 'home' %}" class="header__logo" style="margin: 12px;">
                         <img src="{% static 'main/logo.png' %}" />
                     </a>
-                  <ul class="nav__mobile-list">
+                  <ul class="nav__mobile-list" style="margin-top: 10px;">
                     <li><a href="{% url 'challenge' %}" class="nav__mobile-link">Challenges</a></li>
                     <li><a href="{% url 'calendar' %}" class="nav__mobile-link">Calendar</a></li>
                     <li><a href="{% url 'chart' %}" class="nav__mobile-link">Charts</a></li>
