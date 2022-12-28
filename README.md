@@ -41,3 +41,7 @@ To run the app, simply execute following command :
 ```bash
 python manage.py runserver
 ```
+
+### Preview
+
+![](demo.png)
